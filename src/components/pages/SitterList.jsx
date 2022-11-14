@@ -4,6 +4,8 @@ import UserServices from "../../services/UserServices";
 const  SitterList = () => {
     const [users, setUser] = useState([]);
     const effectRan = useRef(false);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
       if(effectRan.current === false){
         retrieveUser(); 
@@ -14,9 +16,11 @@ const  SitterList = () => {
     }, []);
 
     const retrieveUser = () =>{
+      setLoading(true);
         UserServices.getAll()
         .then(response => {
             setUser(response.data);
+            setLoading(false);
             console.log(response.data);
         })
         .catch( e => {
@@ -28,6 +32,9 @@ const  SitterList = () => {
         <div className="container-fluid">
         <h4 className="text-center">Sitter Records</h4>	
        <table className="table" id="myTable">
+       {loading && (
+        <p>something is loading</p>
+        )}
           <thead className="thead-dark">
             <tr>
               <th>S No.</th>
