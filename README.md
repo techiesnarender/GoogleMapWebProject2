@@ -6,6 +6,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+Runs the app in the Server mode.\
+Open [https://map-react-misha.herokuapp.com/](https://map-react-misha.herokuapp.com/) to view it in your browser.
+Open [https://tomcat1.shiftescape.com/api/](https://tomcat1.shiftescape.com/api/) to view it in your Backend Server.
+
 ### `npm start`
 
 Runs the app in the development mode.\
