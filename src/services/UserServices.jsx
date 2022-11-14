@@ -2,7 +2,8 @@ import http from "../http-common";
 import authHeader from "./auth-header";
 
 const getAll = () => {
-  return http.get("/admin/users", { headers: authHeader() });
+  return http.get("/users", { headers: authHeader() });
+ // return http.get("/admin/users", { headers: authHeader() });
 };
 
 const get = id => {
