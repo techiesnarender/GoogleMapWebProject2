@@ -31,10 +31,10 @@ const  SitterList = () => {
     return (
         <div className="container-fluid">
         <h4 className="text-center">Sitter Records</h4>	
-       <table className="table" id="myTable">
-       {loading && (
-        <p>something is loading</p>
+        {loading && (
+        <span className="spinner-border" style={{ position: "fixed", zIndex:"1031", top:"50%", left: "50%", transform: "initial" }}></span>
         )}
+       <table className="table" id="myTable"> 
           <thead className="thead-dark">
             <tr>
               <th>S No.</th>
