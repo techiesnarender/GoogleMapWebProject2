@@ -5,7 +5,7 @@ export default class Home extends Component {
     return(
         <div className="container" id="homedev">
         <div className="jumbotron text-center">
-            <h1> Welcome to Misha Infotech </h1>	            
+            <h1>Welcome to Misha Infotech</h1>	            
         </div>   
     </div>
 
