@@ -29,7 +29,7 @@ const  SitterList = () => {
     };
 
     return (
-        <div className="container-fluid">
+        <>
         <h4 className="text-center">Sitter Records</h4>	
         {loading && (
         <span className="spinner-border" style={{ position: "fixed", zIndex:"1031", top:"50%", left: "50%", transform: "initial" }}></span>
@@ -61,7 +61,7 @@ const  SitterList = () => {
            
           </tbody>
         </table>
-      </div>
+      </>
     );
 }
 
