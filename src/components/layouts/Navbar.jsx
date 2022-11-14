@@ -7,7 +7,6 @@ const Navbar = () => {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
 
-
   useEffect(() => {
     const user = AuthService.getCurrentUser();
 

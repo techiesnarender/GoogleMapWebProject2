@@ -99,7 +99,7 @@ const SearchSitter = () => {
   var map, markers, myLatlng;
 
   function initMap() {
-    console.log(users);
+    //console.log(users);
     //Getting Current geo locations for search box address
 
     var latElGeo = document.getElementById("lat"),
