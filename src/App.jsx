@@ -10,6 +10,8 @@ import SearchSitter from "./components/pages/SearchSitter";
 import Login from "./components/pages/Login";
 import Profile from "./components/pages/Profile";
 import ChangePassword from "./components/pages/ChangePassword";
+import ForgetPassword from "./components/pages/ForgetPassword";
+import ResetPassword from "./components/pages/ResetPassword";
 
 const  App = () => {
   return (
@@ -25,7 +27,12 @@ const  App = () => {
             <Route exact path="/profile" element={<Profile />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/changepassword" element={<ChangePassword />} />
+            <Route exact path="/forgetpassword" element={<ForgetPassword />} />
         </Routes>
+        <Routes>
+        <Route  path="/reset_password" element={<ResetPassword />} />
+        </Routes>
+       
       </div>
     </Router>
   );

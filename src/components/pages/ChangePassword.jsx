@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import AuthService from '../../services/auth.service';
 
 const ChangePassword = () => {
-
+    let navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const form = useRef();
@@ -21,12 +23,27 @@ const ChangePassword = () => {
       };
 
     const handleChangePassword = (e) =>{
-        //e.preventDefault();
+        e.preventDefault();
 
-        // setMessage("");
-        // setLoading(true);
-
-
+         setMessage("");
+         setLoading(true);
+        AuthService.changepassword(oldpassword, newpassword).then(
+            () => {
+              navigate("/profile");
+              window.location.reload();
+            },
+            (error) => {
+              const resMessage =
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString();
+    
+              setLoading(false);
+              setMessage(resMessage);
+            }
+          );
     }
   return (
     <div className="col-md-12">

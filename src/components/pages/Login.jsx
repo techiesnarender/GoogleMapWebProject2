@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import AuthService from "../../services/auth.service";
 
@@ -114,6 +114,9 @@ const Login = () => {
           )}
           <button style={{ display: "none" }} ref={checkBtn} />
         </form>
+        <Link to={"/forgetpassword"} className="nav-link text-center">
+        Forget Password?
+        </Link>
       </div>
     </div>
   );
