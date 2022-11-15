@@ -9,6 +9,7 @@ import SitterList from "./components/pages/SitterList";
 import SearchSitter from "./components/pages/SearchSitter";
 import Login from "./components/pages/Login";
 import Profile from "./components/pages/Profile";
+import ChangePassword from "./components/pages/ChangePassword";
 
 const  App = () => {
   return (
@@ -23,6 +24,7 @@ const  App = () => {
             <Route exact path="/admin/sitterlist" element={<SitterList />} />
             <Route exact path="/profile" element={<Profile />} />
             <Route exact path="/login" element={<Login />} />
+            <Route exact path="/changepassword" element={<ChangePassword />} />
         </Routes>
       </div>
     </Router>

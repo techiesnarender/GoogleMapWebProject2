@@ -56,10 +56,19 @@ const Navbar = () => {
 
         {currentUser ? (
           <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={"/profile"} className="nav-link">
+            <li className="nav-item dropdown">
+              <Link to={"/profile"} className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {currentUser.contactname}
               </Link>
+
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <Link to={"/profile"} className="dropdown-item" href="#">
+               Profile
+              </Link>
+              <Link to={"/changepassword"} className="dropdown-item" href="#">
+               Change Password?
+              </Link>
+              </div>
             </li>
             <li className="nav-item">
               <a href="/login" className="nav-link" onClick={logOut}>

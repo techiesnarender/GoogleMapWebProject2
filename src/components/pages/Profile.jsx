@@ -36,7 +36,42 @@ const Profile = () => {
         )}
        <div className="row">
           <div className="col-sm-3">     
-            Profile Image 
+          <div className="text-center">
+    <img
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      className="avatar rounded-circle img-thumbnail"
+      alt="avatar"
+      draggable= "true"
+    />
+    <h6>Upload a different photo...</h6>
+    <form
+      className="form"
+      action="/update_profile"
+      method="post"
+      id="registrationForm"
+      encType="multipart/form-data"
+    >
+      <input
+        type="hidden"
+        className="form-control"
+        name="email"
+        id="email"
+        placeholder="Ex. John@gmail.com"
+        title="enter your email if any."
+        //defaultValue="${user.username }"
+      />
+      <input
+        type="file"
+        name="logo"
+        className="text-center center-block file-upload"
+        required="required"
+      />
+      <button type="submit" className="btn btn-primary">
+        Update
+      </button>
+    </form>
+  </div>
+  <br />
             </div>
           <div className="col-sm-9">
          
