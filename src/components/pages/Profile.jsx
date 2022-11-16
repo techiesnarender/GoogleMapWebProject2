@@ -38,10 +38,11 @@ const Profile = () => {
           <div className="col-sm-3">     
           <div className="text-center">
     <img
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      src={users.logo}
       className="avatar rounded-circle img-thumbnail"
-      alt="avatar"
+      alt={users.contactname}
       draggable= "true"
+      style={{height:"200px", width: "200px"}}
     />
     <h6>Upload a different photo...</h6>
     <form
@@ -50,6 +51,7 @@ const Profile = () => {
       method="post"
       id="registrationForm"
       encType="multipart/form-data"
+      accept="image/*"
     >
       <input
         type="hidden"
