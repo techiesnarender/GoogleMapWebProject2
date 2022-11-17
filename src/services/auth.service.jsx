@@ -1,10 +1,10 @@
 import axios from "axios";
 
-//const API_URL = "https://tomcat1.shiftescape.com/api/auth/";
-//const API_ChangePassword_URL = "https://tomcat1.shiftescape.com/api/users/";
+const API_URL = "https://tomcat1.shiftescape.com/api/auth/";
+const API_ChangePassword_URL = "https://tomcat1.shiftescape.com/api/users/";
 
-const API_URL = "http://localhost:8080/api/auth/"
-const API_ChangePassword_URL = "http://localhost:8080/api/users/";
+// const API_URL = "http://localhost:8080/api/auth/"
+// const API_ChangePassword_URL = "http://localhost:8080/api/users/";
 const API_ForgetPassword_URL = "http://localhost:8080/api/";
 const API_ImageUpload_URL = "http://localhost:8080/api/users/";
 
