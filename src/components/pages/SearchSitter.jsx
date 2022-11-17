@@ -279,7 +279,7 @@ const SearchSitter = () => {
                       <div className="row">
                         <div className="col-sm-4">
                           <img
-                            src="#"
+                            src={user.logo} 
                             alt=""
                             style={{ height: "100px", width: "100px" }}
                           />

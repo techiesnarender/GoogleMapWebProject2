@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import UserServices from "../../services/UserServices";
 
 const Profile = () => {
+  let navigate = useNavigate();
+  /** Fecth Current user details */
   const currentUser = AuthService.getCurrentUser();
   const [loading, setLoading] = useState(false);
 
@@ -28,6 +31,43 @@ const Profile = () => {
       });
   };
 
+/** Upload image code.. */
+
+	const [selectedFile, setSelectedFile] = useState();
+	
+
+	const changeHandler = (event) => {
+		setSelectedFile(event.target.files[0]);
+   
+	};
+
+	const handleSubmission = () => {
+		const formData = new FormData();
+
+		formData.append('file', selectedFile);
+    formData.append('email', currentUser.email);
+
+		fetch(
+			'http://localhost:8080/api/users/uploadFile',
+			{
+				method: 'POST',
+				body: formData,
+			}
+		)
+			.then( 
+        () => {
+          navigate("/profile");
+          window.location.reload();
+        },
+        (response) => response.json())
+			.then((result) => {
+				console.log('Success:', result);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+	};
+	
   return (
     <div className="container">
       <h3 className="text-center"><strong>Sitter Profile</strong></h3>
@@ -44,34 +84,17 @@ const Profile = () => {
       draggable= "true"
       style={{height:"200px", width: "200px"}}
     />
-    <h6>Upload a different photo...</h6>
-    <form
-      className="form"
-      action="/update_profile"
-      method="post"
-      id="registrationForm"
-      encType="multipart/form-data"
-      accept="image/*"
-    >
-      <input
-        type="hidden"
-        className="form-control"
-        name="email"
-        id="email"
-        placeholder="Ex. John@gmail.com"
-        title="enter your email if any."
-        //defaultValue="${user.username }"
-      />
+    <h6>Upload a different photo...</h6> 
       <input
         type="file"
-        name="logo"
+        name="file"
         className="text-center center-block file-upload"
         required="required"
+        onChange={changeHandler}
       />
-      <button type="submit" className="btn btn-primary">
+      <button className="btn btn-primary" onClick={handleSubmission}>
         Update
       </button>
-    </form>
   </div>
   <br />
             </div>

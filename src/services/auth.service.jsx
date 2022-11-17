@@ -6,6 +6,8 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/auth/"
 const API_ChangePassword_URL = "http://localhost:8080/api/users/";
 const API_ForgetPassword_URL = "http://localhost:8080/api/";
+const API_ImageUpload_URL = "http://localhost:8080/api/users/";
+
 const login = (email, password) => {
   return axios
     .post(API_URL + "signin", {
@@ -22,11 +24,12 @@ const login = (email, password) => {
     });
 };
 
-const changepassword = (oldpassword, newpassword) =>{
+const changepassword = (oldpassword, newpassword, email) =>{
   return axios
     .post(API_ChangePassword_URL + "changepassword", {
       oldpassword,
       newpassword,
+      email,
     })
     .then((response) => {
       console.log(response.data);
@@ -60,6 +63,19 @@ const resetPassword = (token, password) =>{
     });
 }
 
+const uploadImage = (file, email) =>{
+  return axios
+    .post(API_ImageUpload_URL + "uploadFile", {
+      file,
+      email
+    })
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+      
+    });
+}
+
 const logout = () => {
   localStorage.removeItem("user");
 };
@@ -75,6 +91,7 @@ const AuthService = {
   fogetPassword,
   resetPassword,
   getCurrentUser,
+  uploadImage,
 };
 
 export default AuthService;

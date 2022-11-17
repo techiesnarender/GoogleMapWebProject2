@@ -71,7 +71,7 @@ function ResetPassword() {
 
                             <div className="form-group">
                                 <label htmlFor="password" className='col-form-label font-weight-bold'>Confirm Password: </label>
-                                <input type="password" name='password' className="form-control" id="password" value={password} onChange={onChangePassword} aria-describedby="email" placeholder="Enter your confirm password" autoFocus/>
+                                <input type="password" name='password' className="form-control" id="password" value={password} onChange={onChangePassword} aria-describedby="email" placeholder="Enter your confirm password"/>
                             </div>
                             
                             <div className="form-group">

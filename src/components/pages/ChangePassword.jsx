@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/auth.service';
 
 const ChangePassword = () => {
+
+  const currentUser = AuthService.getCurrentUser();
     let navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -22,12 +24,12 @@ const ChangePassword = () => {
         setNewPassword(newpassword);
       };
 
-    const handleChangePassword = (e) =>{
+    const handleChangePassword = (e) =>{ debugger
         e.preventDefault();
 
          setMessage("");
          setLoading(true);
-        AuthService.changepassword(oldpassword, newpassword).then(
+        AuthService.changepassword(oldpassword, newpassword, currentUser.email).then(
             () => {
               navigate("/profile");
               window.location.reload();

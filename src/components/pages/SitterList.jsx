@@ -38,6 +38,7 @@ const  SitterList = () => {
           <thead className="thead-dark">
             <tr>
               <th>S No.</th>
+              <th>Company Logo</th>
               <th>Company Name</th>
               <th>Name</th>
               <th>Email</th>
@@ -50,6 +51,7 @@ const  SitterList = () => {
              {users && users.length > 0 && users.map((user, index) => (
                 <tr key={user.id}>
                 <td>{index + 1}</td>
+                <td><img src={user.logo} alt={users.contactname} draggable= "true" style={{height:"50px", width: "50px"}} /></td>
                 <td>{user.company}</td>
                 <td>{user.contactname}</td>
                 <td>{user.email}</td>
