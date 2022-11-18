@@ -5,6 +5,7 @@ const  SitterList = () => {
     const [users, setUser] = useState([]);
     const effectRan = useRef(false);
     const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
 
     useEffect(() => {
       if(effectRan.current === false){
@@ -15,16 +16,19 @@ const  SitterList = () => {
       }       
     }, []);
 
-    const retrieveUser = () =>{
+    const retrieveUser = (e) =>{
       setLoading(true);
         UserServices.getAll()
         .then(response => {
             setUser(response.data);
             setLoading(false);
+            setMessage("")
             console.log(response.data);
         })
         .catch( e => {
             console.log(e);
+            setLoading(false);
+            setMessage("Something went wrong!");
         });
     };
 
@@ -47,7 +51,14 @@ const  SitterList = () => {
               <th>Charges</th>
             </tr>
           </thead>
-          <tbody>         
+          <tbody> 
+          {message && (
+            <div className="form-group" style={{ position: "fixed", zIndex:"1031", left: "45%", transform: "initial" }}>
+              <div className="alert alert-danger " role="alert">
+                {message}
+              </div>
+            </div>
+          )}        
              {users && users.length > 0 && users.map((user, index) => (
                 <tr key={user.id}>
                 <td>{index + 1}</td>
