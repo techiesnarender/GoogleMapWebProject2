@@ -159,6 +159,7 @@ window.initMap = initMap;
 
 	const [users, setUser] = useState(initialUserService);
 	const [submitted, setSubmitted] = useState(false);
+	const [loading, setLoading] = useState(false);
 	//const [image, setImage] = useState('');
 	///let formData = new FormData();
 
@@ -167,10 +168,11 @@ window.initMap = initMap;
 		// setUser(event.target.files[0]);
 		// console.log(files);
 		const {name, value} = event.target;
-		setUser({...users, [name]: value});
+		setUser({...users, [name]: value});	
 	};
 	
-	const saveUser = () =>{ 
+	const saveUser = (e) =>{ 
+		e.preventDefault();
 		var data = {
 			contactname: users.contactname,
 			email: users.email,
@@ -184,6 +186,7 @@ window.initMap = initMap;
 			chargesperhour: users.chargesperhour,
 			logo: users.logo,
 			enabled: users.enabled
+			
 		}
 
 	UserServices.create(data)
@@ -203,11 +206,14 @@ window.initMap = initMap;
 				logo: response.data.logo,
 				enabled: response.data.enabled
 			});
+			
 			setSubmitted(true);
+			setLoading(true);
 			//console.log(response.data);
 		})
 		.catch(e =>{
 			//console.log(e);
+			setLoading(false);
 		})
 	};
 
@@ -319,7 +325,13 @@ window.initMap = initMap;
 						</div> */}
 						<input type="hidden" name="enabled" id="enabled" className="form-control" value={users.enabled} onChange={handleInputChange} />
 								 
-						<button onClick={saveUser} className="btn btn-success">Submit</button> 					
+						<button className="btn btn-primary" disabled={loading} onClick={saveUser}>
+						{loading && (
+							<span className="spinner-border spinner-border-sm"></span>
+						)}
+						<span>Submit</span>
+						</button>
+						{/* <button  className="btn btn-success">Submit</button> */}
 				  </div>
 				</div>
 			  </div>

@@ -3,16 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import AuthService from "../../services/auth.service";
 
-const required = (value) => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    );
-  }
-};
-
 const Login = () => {
   let navigate = useNavigate();
 
@@ -57,7 +47,7 @@ const Login = () => {
             error.toString();
 
           setLoading(false);
-          setMessage(resMessage);
+          setMessage( resMessage);
         }
       );
   };
@@ -80,7 +70,6 @@ const Login = () => {
               name="email"
               value={email}
               onChange={onChangeUsername}
-              validations={[required]}
             />
           </div>
 
@@ -92,7 +81,6 @@ const Login = () => {
               name="password"
               value={password}
               onChange={onChangePassword}
-              validations={[required]}
             />
           </div>
 
