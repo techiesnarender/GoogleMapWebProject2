@@ -49,6 +49,7 @@ const Profile = () => {
 
 		fetch(
 			//'http://localhost:8080/api/users/uploadFile',
+      
       'https://tomcat1.shiftescape.com/api/users/uploadFile',
 			{
 				method: 'POST',
