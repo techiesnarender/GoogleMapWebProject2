@@ -49,7 +49,6 @@ const Profile = () => {
 
 		fetch(
 			//'http://localhost:8080/api/users/uploadFile',
-      
       'https://tomcat1.shiftescape.com/api/users/uploadFile',
 			{
 				method: 'POST',
@@ -79,6 +78,7 @@ const Profile = () => {
        <div className="row">
           <div className="col-sm-3">     
           <div className="text-center">
+            
     <img
       src={users.logo}
       className="avatar rounded-circle img-thumbnail"
@@ -94,9 +94,16 @@ const Profile = () => {
         required="required"
         onChange={changeHandler}
       />
-      <button className="btn btn-primary" onClick={handleSubmission}>
-        Update
-      </button>
+
+      <button className="btn btn-primary" disabled={loading} onClick={handleSubmission}>
+              {loading && (
+                <span className="spinner-border spinner-border-sm"></span>
+              )}
+              <span>Update</span>
+            </button>
+      {/* <button className="btn btn-primary" onClick={handleSubmission}>
+        
+      </button> */}
   </div>
   <br />
             </div>

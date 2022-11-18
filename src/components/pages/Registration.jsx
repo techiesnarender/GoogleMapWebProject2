@@ -153,7 +153,7 @@ window.initMap = initMap;
 		open: "",
 		close: "",
 		chargesperhour: "",
-		logo: "",
+		logo: "//ssl.gstatic.com/accounts/ui/avatar_2x.png",
 		enabled: true,
 	};
 
@@ -310,13 +310,13 @@ window.initMap = initMap;
 							 </div>
 						 </div>
 						 
-						   <div className="form-group row">
-							   <label className="col-sm-3 col-form-label font-weight-bold">Upload Photo :</label>
-								   <div className="col-sm-6">
-									   <input type="file" name="logo" className="" id="imagefile" value={users.logo} onChange={handleInputChange} formEncType="mul" />
-								   <div className="error"></div>
+						   {/* <div className="form-group row">
+							   <label className="col-sm-3 col-form-label font-weight-bold"></label>
+								   <div className="col-sm-6"> */}
+									   <input type="text" name="logo" className="" id="imagefile" value={users.logo} onChange={handleInputChange} style={{display: "none"}} />
+								   {/* <div className="error"></div>
 								   </div>
-						</div>
+						</div> */}
 						<input type="hidden" name="enabled" id="enabled" className="form-control" value={users.enabled} onChange={handleInputChange} />
 								 
 						<button onClick={saveUser} className="btn btn-success">Submit</button> 					
