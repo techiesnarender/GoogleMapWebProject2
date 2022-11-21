@@ -50,15 +50,8 @@ const  SitterList = () => {
               <th>Open Time</th>
               <th>Charges</th>
             </tr>
-          </thead>
-          <tbody> 
-          {message && (
-            <div className="form-group" style={{ position: "fixed", zIndex:"1031", left: "45%", transform: "initial" }}>
-              <div className="alert alert-danger " role="alert">
-                {message}
-              </div>
-            </div>
-          )}        
+          </thead>  
+          <tbody>    
              {users && users.length > 0 && users.map((user, index) => (
                 <tr key={user.id}>
                 <td>{index + 1}</td>
@@ -74,6 +67,11 @@ const  SitterList = () => {
            
           </tbody>
         </table>
+        {message && (    
+              <span className="alert alert-danger " role="alert" style={{ position: "fixed", zIndex:"1031", left: "45%", transform: "initial" }}>
+                {message}
+              </span>
+          )}   
       </>
     );
 }

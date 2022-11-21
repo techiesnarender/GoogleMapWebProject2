@@ -69,14 +69,15 @@ const SearchSitter = () => {
     UserServices.findNearestLocation(searchAddress, searchLat, searchLong).then(
       (response) => {
         setUsers(response.data);
-        console.log(response.data);
         setLoading(false);
+        console.log(response.data);
       }
     ).catch((error) => {
       console.error('Error:', error);
       setLoading(false);
     });
   };
+  
   //console.log("User"+users);
 
   //        // Fetching records based on nearest location
@@ -224,6 +225,7 @@ const SearchSitter = () => {
       //     });
   }
   window.initMap = initMap;
+
   return (
     <div>
       <h4 className="text-center">Search Sitter</h4>

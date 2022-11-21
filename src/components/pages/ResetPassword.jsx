@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/auth.service';
 
 function ResetPassword() {
-
+  
     const authResult = new URLSearchParams(window.location.search); 
     const token = authResult.get('token')
 
