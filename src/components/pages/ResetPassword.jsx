@@ -79,7 +79,7 @@ function ResetPassword() {
                                 {loading && (
                                     <span className="spinner-border spinner-border-sm"></span>
                                 )}
-                                <span>Change Password</span>
+                                <span> Change Password</span>
                             </button>
                             </div>
                             {message && (

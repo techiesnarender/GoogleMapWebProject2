@@ -34,14 +34,14 @@ const Profile = () => {
 /** Upload image code.. */
 
 	const [selectedFile, setSelectedFile] = useState();
-	
-
+  const [loadingImg, setImgLoading] = useState(false);
 	const changeHandler = (event) => {
 		setSelectedFile(event.target.files[0]);
    
 	};
 
 	const handleSubmission = () => {
+    setImgLoading(true);
 		const formData = new FormData();
 
 		formData.append('file', selectedFile);
@@ -60,14 +60,16 @@ const Profile = () => {
           navigate("/profile");
           window.location.reload();
         },
-        (response) => response.json())
+        (response) => response.json() )
 			.then((result) => {
 				console.log('Success:', result);
+        setImgLoading(false);
 			})
 			.catch((error) => {
 				console.error('Error:', error);
+        setImgLoading(false);
 			});
-	};
+	} ;
 	
   return (
     <div className="container">
@@ -95,8 +97,8 @@ const Profile = () => {
         onChange={changeHandler}
       />
 
-      <button className="btn btn-primary" disabled={loading} onClick={handleSubmission}>
-              {loading && (
+      <button className="btn btn-primary" disabled={loadingImg} onClick={handleSubmission}>
+              {loadingImg && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
               <span>Update</span>

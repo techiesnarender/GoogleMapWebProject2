@@ -2,8 +2,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import UserServices from "../../services/UserServices";
 
-const Registration = () => {  
-
 function initMap() {
 	var mapOptions, map, marker, searchBox,
 	infoWindow = '',
@@ -108,10 +106,22 @@ google.maps.event.addListener( marker, "dragend", function () {
 	} );
 });
 }
+
 window.initMap = initMap;
 
-//  Code start for form check 
+function setNativeValue(element, value) {
+	const valueSetter = Object.getOwnPropertyDescriptor(element, 'value').set;
+	const prototype = Object.getPrototypeOf(element);
+	const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value').set;
+  
+	if (valueSetter && valueSetter !== prototypeValueSetter) {
+	  prototypeValueSetter.call(element, value);
+	} else {
+	  valueSetter.call(element, value);
+	}
+  }
 
+const Registration = () => {
 	const effectRan = useRef(false);
 	
 	useEffect(() => {
@@ -127,19 +137,6 @@ window.initMap = initMap;
 		}
 	}
 	  }, []);
-
-
-	  function setNativeValue(element, value) {
-		const valueSetter = Object.getOwnPropertyDescriptor(element, 'value').set;
-		const prototype = Object.getPrototypeOf(element);
-		const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value').set;
-	  
-		if (valueSetter && valueSetter !== prototypeValueSetter) {
-		  prototypeValueSetter.call(element, value);
-		} else {
-		  valueSetter.call(element, value);
-		}
-	  }
 
 	const initialUserService ={
 		id: null,
@@ -160,19 +157,14 @@ window.initMap = initMap;
 	const [users, setUser] = useState(initialUserService);
 	const [submitted, setSubmitted] = useState(false);
 	const [loading, setLoading] = useState(false);
-	//const [image, setImage] = useState('');
-	///let formData = new FormData();
 
 	const handleInputChange = event => {
-		// const files = event.target.files;
-		// setUser(event.target.files[0]);
-		// console.log(files);
 		const {name, value} = event.target;
 		setUser({...users, [name]: value});	
 	};
 	
-	const saveUser = (e) =>{ 
-		e.preventDefault();
+	const saveUser = (e) =>{
+		setLoading(true);
 		var data = {
 			contactname: users.contactname,
 			email: users.email,
@@ -186,7 +178,6 @@ window.initMap = initMap;
 			chargesperhour: users.chargesperhour,
 			logo: users.logo,
 			enabled: users.enabled
-			
 		}
 
 	UserServices.create(data)
@@ -205,15 +196,14 @@ window.initMap = initMap;
 				chargesperhour: response.data.chargesperhour,
 				logo: response.data.logo,
 				enabled: response.data.enabled
-			});
-			
+			});		
 			setSubmitted(true);
-			setLoading(true);
-			//console.log(response.data);
+			setLoading(false);
+			console.log(response.data);
 		})
 		.catch(e =>{
-			//console.log(e);
 			setLoading(false);
+			console.log(e);
 		})
 	};
 
@@ -329,7 +319,7 @@ window.initMap = initMap;
 						{loading && (
 							<span className="spinner-border spinner-border-sm"></span>
 						)}
-						<span>Submit</span>
+						<span> Submit</span>
 						</button>
 						{/* <button  className="btn btn-success">Submit</button> */}
 				  </div>

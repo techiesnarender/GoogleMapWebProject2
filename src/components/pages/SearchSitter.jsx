@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import UserServices from "../../services/UserServices";
 
 const SearchSitter = () => {
+
   const effectRan = useRef(false);
 
   useEffect(() => {
@@ -22,11 +23,11 @@ const SearchSitter = () => {
   const [searchAddress, setSearchAddress] = useState("");
   const [searchLat, setSearchLat] = useState("");
   const [searchLong, setSearchLong] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (effectRan.current === false) {
       findNearestLocation();
-     
       return () => {
         effectRan.current = true;
       };
@@ -64,12 +65,17 @@ const SearchSitter = () => {
   };
 
   const findNearestLocation = () => {
+    setLoading(true);
     UserServices.findNearestLocation(searchAddress, searchLat, searchLong).then(
       (response) => {
         setUsers(response.data);
-        //console.log(response.data);
+        console.log(response.data);
+        setLoading(false);
       }
-    );
+    ).catch((error) => {
+      console.error('Error:', error);
+      setLoading(false);
+    });
   };
   //console.log("User"+users);
 
@@ -217,7 +223,6 @@ const SearchSitter = () => {
       //      imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
       //     });
   }
-
   window.initMap = initMap;
   return (
     <div>
@@ -253,13 +258,12 @@ const SearchSitter = () => {
             onChange={onChangeSearchLong}
             style={{ display: "none" }}
           />
-          <button
-            className="btn btn-outline-primary"
-            type="button"
-            onClick={findNearestLocation}
-          >
-            search
-          </button>
+         <button className="btn btn-primary" disabled={loading} onClick={findNearestLocation}>
+              {loading && (
+                <span className="spinner-border spinner-border-sm"></span>
+              )}
+              <span> Search</span>
+            </button>
         </div>
         <div id="floating-panel"></div>
       </div>

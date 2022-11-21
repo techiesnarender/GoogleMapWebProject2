@@ -61,7 +61,7 @@ function ForgetPassword() {
                                 {loading && (
                                     <span className="spinner-border spinner-border-sm"></span>
                                 )}
-                                <span>Send</span>
+                                <span> Send</span>
                             </button>
                             </div>
                             {message && (
