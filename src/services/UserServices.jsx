@@ -14,11 +14,11 @@ const create = data => {
 };
 
 const update = (id, data) => {
-  return http.put(`/users/${id}`, data);
+  return http.post(`/users/edit/${id}`, data);
 };
 
 const remove = id => {
-  return http.delete(`/users/${id}`);
+  return http.post(`/users/delete/${id}`);
 };
 
 const findNearestLocation = (address, latitude, longitude) => {

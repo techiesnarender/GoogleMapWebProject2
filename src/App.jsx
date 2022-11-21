@@ -12,6 +12,7 @@ import Profile from "./components/pages/Profile";
 import ChangePassword from "./components/pages/ChangePassword";
 import ForgetPassword from "./components/pages/ForgetPassword";
 import ResetPassword from "./components/pages/ResetPassword";
+import EditSitter from "./components/pages/EditSitter";
 
 const  App = () => {
   return (
@@ -28,6 +29,7 @@ const  App = () => {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/changepassword" element={<ChangePassword />} />
             <Route exact path="/forgetpassword" element={<ForgetPassword />} />
+            <Route exact path="/editsitter/:id" element={<EditSitter />} />
         </Routes>
         <Routes>
         <Route  path="/reset_password" element={<ResetPassword />} />

@@ -1,7 +1,9 @@
 import React, {useState, useEffect, useRef} from "react";
+import { Link } from "react-router-dom";
 import UserServices from "../../services/UserServices";
 
-const  SitterList = () => {
+const  SitterList = (props) => {
+
     const [users, setUser] = useState([]);
     const effectRan = useRef(false);
     const [loading, setLoading] = useState(false);
@@ -49,6 +51,7 @@ const  SitterList = () => {
               <th>Address</th>
               <th>Open Time</th>
               <th>Charges</th>
+              <th>Action</th>
             </tr>
           </thead>  
           <tbody>    
@@ -62,6 +65,14 @@ const  SitterList = () => {
                 <td>{user.address.substring(0, 30)} ...{" "} {user.address.substr(user.address.length - 20)}</td>
                 <td>{user.open}</td>
                 <td>{user.chargesperhour}</td>
+                <td>
+                <Link
+                to={"/editsitter/" + user.id}
+                className="badge badge-warning"
+                >
+                Edit
+              </Link>
+                </td>       
                 </tr>
              ))}
            

@@ -26,3 +26,7 @@ label {
     -webkit-border-radius: 50%;
     border-radius: 50%;
   }
+  .edit-form {
+    max-width: 500px;
+    margin: auto;
+  }
