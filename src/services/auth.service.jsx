@@ -1,17 +1,11 @@
 import axios from "axios";
 
-const API_URL = "https://tomcat1.shiftescape.com/api/auth/";
-const API_ChangePassword_URL = "https://tomcat1.shiftescape.com/api/users/";
-
-//  const API_URL = "http://localhost:8080/api/auth/"
-// const API_ChangePassword_URL = "http://localhost:8080/api/users/";
-//const API_ForgetPassword_URL = "http://localhost:8080/api/";
-const API_ForgetPassword_URL = "https://tomcat1.shiftescape.com/api/";
-const API_ImageUpload_URL = "https://tomcat1.shiftescape.com/api/users/";
+const API_URL = "https://tomcat1.shiftescape.com/api/";
+//const API_URL = "http://localhost:8080/api/"
 
 const login = (email, password) => {
   return axios
-    .post(API_URL + "signin", {
+    .post(API_URL + "auth/signin", {
       email,
       password,
     })
@@ -27,7 +21,7 @@ const login = (email, password) => {
 
 const changepassword = (oldpassword, newpassword, email) =>{
   return axios
-    .post(API_ChangePassword_URL + "changepassword", {
+    .post(API_URL + "users/changepassword", {
       oldpassword,
       newpassword,
       email,
@@ -41,7 +35,7 @@ const changepassword = (oldpassword, newpassword, email) =>{
 
 const fogetPassword = (email) =>{
   return axios
-    .post(API_ForgetPassword_URL + "forgot_password", {
+    .post(API_URL + "forgot_password", {
       email,
     })
     .then((response) => {
@@ -53,7 +47,7 @@ const fogetPassword = (email) =>{
 
 const resetPassword = (token, password) =>{
   return axios
-    .post(API_ForgetPassword_URL + "reset_password", {
+    .post(API_URL + "reset_password", {
       token,
       password
     })
@@ -64,18 +58,18 @@ const resetPassword = (token, password) =>{
     });
 }
 
-const uploadImage = (file, email) =>{
-  return axios
-    .post(API_ImageUpload_URL + "uploadFile", {
-      file,
-      email
-    })
-    .then((response) => {
-      console.log(response.data);
-      return response.data;
+// const uploadImage = (file, email) =>{
+//   return axios
+//     .post(API_URL + "users/uploadFile", {
+//       file,
+//       email
+//     })
+//     .then((response) => {
+//       console.log(response.data);
+//       return response.data;
       
-    });
-}
+//     });
+// }
 
 const logout = () => {
   localStorage.removeItem("user");
@@ -92,7 +86,7 @@ const AuthService = {
   fogetPassword,
   resetPassword,
   getCurrentUser,
-  uploadImage,
+  //uploadImage,
 };
 
 export default AuthService;
