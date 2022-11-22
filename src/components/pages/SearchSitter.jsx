@@ -250,6 +250,7 @@ const SearchSitter = () => {
             className="form-control lat"
             value={searchLat}
             onChange={onChangeSearchLat}
+            style={{ display: "none" }}
           />
           <input
             type="text"

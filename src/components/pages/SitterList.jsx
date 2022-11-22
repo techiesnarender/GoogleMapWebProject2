@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from "react";
 import { Link } from "react-router-dom";
 import UserServices from "../../services/UserServices";
 
-const  SitterList = (props) => {
+const  SitterList = () => {
 
     const [users, setUser] = useState([]);
     const effectRan = useRef(false);

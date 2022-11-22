@@ -231,36 +231,32 @@ const Registration = () => {
 						<div className="form-group row">
 							<label htmlFor="contactname" className="col-sm-3 col-form-label font-weight-bold"> Name :</label>
 							<div className="col-sm-9">
-								<input type="text" id="contactname" name="contactname" className="form-control" value={users.contactname} onChange={handleInputChange} placeholder="Contact name" maxLength="35" />
-								<div className="error"></div>
+								<input type="text" id="contactname" name="contactname" className="form-control" value={users.contactname} onChange={handleInputChange} placeholder="Contact name"/>								
 							</div>
 						</div>
 						<div className="form-group row">
 							<label htmlFor="email" className="col-sm-3 col-form-label font-weight-bold">Email :</label>
 							<div className="col-sm-9">
-								<input type="text" name="email" className="form-control" id="email" value={users.email} onChange={handleInputChange} placeholder="Ex: john@gmail.com" maxLength="45" />
-								<div className="error"></div>
+								<input type="text" name="email" className="form-control" id="email" value={users.email} onChange={handleInputChange} placeholder="Ex: john@gmail.com"/>	
 							</div>
 						</div>
 						<div className="form-group row">
 							<label htmlFor="password" className="col-sm-3 col-form-label font-weight-bold">Password :</label>
 							<div className="col-sm-9">
-								<input type="password" name="password" className="form-control" id="password" value={users.password} onChange={handleInputChange} placeholder="Password" maxLength="64" />
-								<div className="error"></div>
+								<input type="password" name="password" className="form-control" id="password" value={users.password} onChange={handleInputChange} placeholder="Password"/>	
 							</div>
 						</div>
 						<div className="form-group row">
 						   <label htmlFor="companyname" className="col-sm-3 col-form-label font-weight-bold">Company / Display Name :</label>
 							  <div className="col-sm-9">
-									   <input type="text" name="company" className="form-control" id="company" value={users.company} onChange={handleInputChange} placeholder="Enter your company name" />
-									   <div className="error"></div>
+									   <input type="text" name="company" className="form-control" id="company" value={users.company} onChange={handleInputChange} placeholder="Enter your company name" />	  
 							 </div>
 						 </div>
 						 <div className="form-group row">
 							 <label htmlFor="map-search" className="col-sm-3 col-form-label font-weight-bold">Address :</label>
 							   <div className="col-sm-9">
 								   <input type="text" name="address" className="form-control" id="map-search" value={users.address} onChange={handleInputChange} placeholder="Enter your full address" />
-								   <div className="error"></div>
+								  
 							 </div>
 						 </div>
 						 
@@ -302,7 +298,7 @@ const Registration = () => {
 										<span className="input-group-text font-weight-bold" id="basic-addon2">/hr</span>
 									  </div>
 									</div>
-								   <div className="error"></div>
+								   
 							 </div>
 						 </div>
 						 

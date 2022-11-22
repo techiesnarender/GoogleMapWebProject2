@@ -20,7 +20,7 @@ function ForgetPassword() {
 
       const handleForgetPassword = (e) =>{
         e.preventDefault();
-        setMessage("");
+         setMessage("");
          setLoading(true);
 
         AuthService.fogetPassword(email).then(
