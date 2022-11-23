@@ -13,6 +13,7 @@ import ChangePassword from "./components/pages/ChangePassword";
 import ForgetPassword from "./components/pages/ForgetPassword";
 import ResetPassword from "./components/pages/ResetPassword";
 import EditSitter from "./components/pages/EditSitter";
+import TestFormValidation from "./components/pages/TestFormValidation";
 
 const  App = () => {
   return (
@@ -24,6 +25,7 @@ const  App = () => {
             <Route  path="/home" element={<Home />} />  
             <Route  path="/register" element={<Registration />} />
             <Route  path="/search" element={< SearchSitter />} />
+            <Route  path="/formvalidation" element={< TestFormValidation />} />
             <Route  path="/admin/sitterlist" element={<SitterList />} />
             <Route  path="/profile" element={<Profile />} />
             <Route  path="/login" element={<Login />} />
