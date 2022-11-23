@@ -14,7 +14,7 @@ const TestFormValidation = () => {
           .email('Email is invalid'),
         password: Yup.string()
           .required('Password is required')
-          .min(3, 'Password must be at least 6 characters')
+          .min(4, 'Password must be at least 4 characters')
           .max(40, 'Password must not exceed 40 characters'),
       });
 
@@ -55,7 +55,7 @@ const TestFormValidation = () => {
       );
 
       };
-      
+
   return (
     <div className="col-md-12">
       <div className="card card-container">
@@ -104,7 +104,6 @@ const TestFormValidation = () => {
               </div>
             </div>
           )}
-          <button style={{ display: "none" }} />
         </form>
         <Link to={"/forgetpassword"} className="nav-link text-center">
         Forget Password?
