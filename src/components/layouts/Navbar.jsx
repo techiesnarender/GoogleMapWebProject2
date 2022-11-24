@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 
 const Navbar = () => {
-   
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
-
+  
   useEffect(() => {
     const user = AuthService.getCurrentUser();
 
@@ -16,10 +15,10 @@ const Navbar = () => {
     }
   }, []);
 
+  // Logout function 
   const logOut = () => {
     AuthService.logout();
   };
-
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -37,11 +36,11 @@ const Navbar = () => {
               Search Sitter
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to={"/formvalidation"} className="nav-link">
               Test Validation
             </Link>
-          </li>
+          </li> */}
           {showAdminBoard && (
             <li className="nav-item">
               <Link to={"/admin/sitterlist"} className="nav-link">
@@ -58,7 +57,6 @@ const Navbar = () => {
             </li>
           )}
         </div>
-
         {currentUser ? (
           <div className="navbar-nav ml-auto">
             <li className="nav-item dropdown">
@@ -88,7 +86,6 @@ const Navbar = () => {
                 Login
               </Link>
             </li>
-
             <li className="nav-item">
               <Link to={"/register"} className="nav-link">
                 Sign Up
@@ -100,5 +97,4 @@ const Navbar = () => {
     </div>
   );
 };
-
  export default Navbar;

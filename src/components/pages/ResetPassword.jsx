@@ -1,41 +1,59 @@
-import React, { useRef } from 'react'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 import AuthService from '../../services/auth.service';
 
 function ResetPassword() {
+  const validationSchema = Yup.object().shape({
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Password must be at least 6 characters')
+      .max(40, 'Password must not exceed 40 characters'),
+    confirmPassword: Yup.string()
+      .required('Confirm Password is required')
+      .oneOf([Yup.ref('password'), null], 'Confirm Password does not match')
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
   
     const authResult = new URLSearchParams(window.location.search); 
     const token = authResult.get('token')
 
-    let navigate = useNavigate();
-    const form = useRef();
-    const checkBtn = useRef();
-
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-    const [resetToken, setResetToken] = useState(token);
-    const [password , setPassword] = useState("");
+    const [successful, setSuccessful] = useState(false);
+    //const [resetToken, setResetToken] = useState(token);
+    // const [password , setPassword] = useState("");
 
-    const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
-      };    
+    // const onChangePassword = (e) => {
+    //     const password = e.target.value;
+    //     setPassword(password);
+    //   };    
 
-      const onChangeToken = (e) => {
-        const resetToken = e.target.value;
-        setResetToken(resetToken);
-      };  
+    //   const onChangeToken = (e) => {
+    //     const resetToken = e.target.value;
+    //     setResetToken(resetToken);
+    //   };  
 
-      const handleResetPassword = (e) =>{
-        e.preventDefault();
+      const handleResetPassword = (data) =>{
+       // e.preventDefault();
         setMessage("");
-         setLoading(true);
-
-        AuthService.resetPassword(token, password).then(
-            () => {
-              navigate("/home");
-              window.location.reload();
+        setSuccessful(false);
+        setLoading(true);
+        AuthService.resetPassword(data.token, data.password).then(
+            (response) => {
+              setMessage("Your password has been successfully changed");
+              setSuccessful(true);
+              setLoading(false);
+              console.log(response.data);
+              console.log(JSON.stringify(data, null, 2));
             },
             (error) => {
               const resMessage =
@@ -46,36 +64,55 @@ function ResetPassword() {
                 error.toString();
 
                 setLoading(false);
+                setSuccessful(false);
                 setMessage(resMessage);
             }
           );
     }
-
   return (
     <div className="container" style={{width: '40rem'}}>
 			<div className="card">
 				  <div className="card-header alert-info text-center h3">
 				  <h2>Reset Password</h2>
 				  </div>
-                  <form onSubmit={handleResetPassword} ref={form}>
+                  <form onSubmit={handleSubmit(handleResetPassword)}>
                     <div className="card-body">
-
                              <div className="form-group">
-                                <input type="text" className="form-control" name='token' id="token" aria-describedby="newpassword" value={resetToken} onChange={onChangeToken} placeholder="Enter your new password" style={{ display: "none" }}/>
+                                <input  {...register('token')} type="text" className="form-control" name='token' id="token" aria-describedby="newpassword" value={token} placeholder="Enter your new password" style={{ display: "none" }}/>
                             </div>
-
                             <div className="form-group">
                                 <label htmlFor="newpassword" className='col-form-label font-weight-bold'>Password: </label>
-                                <input type="password" className="form-control" id="newpassword" aria-describedby="newpassword" placeholder="Enter your new password" autoFocus/>
+                                <input 
+                                type="password" 
+                                name='password' 
+                                id="newpassword" 
+                                aria-describedby="newpassword" 
+                                placeholder="Enter your new password" 
+                                autoFocus 
+                                {...register('password')}
+                                className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                                />
+                                <div className="invalid-feedback">{errors.password?.message}</div>
                             </div>
-
                             <div className="form-group">
-                                <label htmlFor="password" className='col-form-label font-weight-bold'>Confirm Password: </label>
-                                <input type="password" name='password' className="form-control" id="password" value={password} onChange={onChangePassword} aria-describedby="email" placeholder="Enter your confirm password"/>
-                            </div>
-                            
+                                <label htmlFor="confirmPassword" className='col-form-label font-weight-bold'>Confirm Password: </label>
+                                <input 
+                                type="password" 
+                                name="confirmPassword" 
+                                id="confirmPassword"  
+                                aria-describedby="email" 
+                                placeholder="Enter your confirm password"
+                                {...register('confirmPassword')}
+                                className={`form-control ${
+                                  errors.confirmPassword ? 'is-invalid' : ''
+                                }`}
+                                />
+                                <div className="invalid-feedback">
+                                  {errors.confirmPassword?.message}
+                                </div>
+                            </div>                          
                             <div className="form-group">
-                            <button className="btn btn-primary btn-block" disabled={loading}>
+                            <button type='submit' className="btn btn-primary btn-block" disabled={loading}>
                                 {loading && (
                                     <span className="spinner-border spinner-border-sm"></span>
                                 )}
@@ -84,17 +121,18 @@ function ResetPassword() {
                             </div>
                             {message && (
                                 <div className="form-group">
-                                <div className="alert alert-danger" role="alert">
+                                <div
+                                      className={ successful ? "alert alert-success" : "alert alert-danger" }
+                                      role="alert"
+                                    >
                                     {message}
                                 </div>
                                 </div>
                             )}
-                            <button style={{ display: "none" }} ref={checkBtn} />
                         </div>
                     </form>
             </div>
     </div>
   )
 }
-
 export default ResetPassword

@@ -1,39 +1,42 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 import AuthService from "../../services/auth.service";
 
 const Login = () => {
-  let navigate = useNavigate();
 
-  const form = useRef();
-  const checkBtn = useRef();
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+          .required('Email is required')
+          .email('Email is invalid'),
+        password: Yup.string()
+          .required('Password is required')
+          .min(4, 'Password must be at least 4 characters')
+          .max(40, 'Password must not exceed 40 characters'),
+      });
 
-  const [email, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+      const [loading, setLoading] = useState(false);
+      const [message, setMessage] = useState("");
+      let navigate = useNavigate();
 
-  const onChangeUsername = (e) => {
-    const email = e.target.value;
-    setUsername(email);
-  };
+      const {
+        register,
+        handleSubmit,
+        formState: { errors }
+      } = useForm({
+        resolver: yupResolver(validationSchema)
+      });
 
-  const onChangePassword = (e) => {
-    const password = e.target.value;
-    setPassword(password);
-  };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+      const onSubmit = data => {
+        setMessage("");
+        setLoading(true);
 
-    setMessage("");
-    setLoading(true);
-
-    // form.current.validateAll();
-
-   
-      AuthService.login(email, password).then(
+        console.log(JSON.stringify(data, null, 2));
+      AuthService.login(data.email, data.password).then(
         () => {
           navigate("/profile");
           window.location.reload();
@@ -45,13 +48,13 @@ const Login = () => {
               error.response.data.message) ||
             error.message ||
             error.toString();
-
+            console.log(resMessage);
           setLoading(false);
           setMessage( resMessage);
         }
       );
-  };
 
+      };
   return (
     <div className="col-md-12">
       <div className="card card-container">
@@ -60,30 +63,27 @@ const Login = () => {
           alt="profile-img"
           className="profile-img-card"
         />
-
-        <form onSubmit={handleLogin} ref={form}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
             <input
-              type="email"
-              className="form-control"
+              type="text"
               name="email"
-              value={email}
-              onChange={onChangeUsername}
+              {...register('email')}
+              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
             />
+            <div className="invalid-feedback">{errors.email?.message}</div>
           </div>
-
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
-              type="password"
-              className="form-control"
+              type="password"            
               name="password"
-              value={password}
-              onChange={onChangePassword}
+              {...register('password')}
+              className={`form-control ${errors.password ? 'is-invalid' : ''}`}
             />
+             <div className="invalid-feedback">{errors.password?.message}</div>
           </div>
-
           <div className="form-group">
             <button className="btn btn-primary btn-block" disabled={loading}>
               {loading && (
@@ -92,7 +92,6 @@ const Login = () => {
               <span>Login</span>
             </button>
           </div>
-
           {message && (
             <div className="form-group">
               <div className="alert alert-danger" role="alert">
@@ -100,7 +99,6 @@ const Login = () => {
               </div>
             </div>
           )}
-          <button style={{ display: "none" }} ref={checkBtn} />
         </form>
         <Link to={"/forgetpassword"} className="nav-link text-center">
         Forget Password?
@@ -109,5 +107,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
