@@ -3,7 +3,7 @@ import AuthService from '../../services/auth.service';
 
 const ChangePassword = () => {
 
-  const currentUser = AuthService.getCurrentUser();
+    const currentUser = AuthService.getCurrentUser();
     const [oldpassword, setOldPassword] = useState("");
     const [newpassword, setNewPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const ChangePassword = () => {
         setSuccessful(false);
         setLoading(true);
         AuthService.changepassword(oldpassword, newpassword, currentUser.email).then(response => {
-          setMessage("Your password has been successfully changed");
+          setMessage("You have successfully changed your password.");
           setSuccessful(true);
           setLoading(false);
           console.log(response.data);  

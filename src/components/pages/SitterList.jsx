@@ -68,7 +68,7 @@ const  SitterList = () => {
                 <td>
                 <Link
                 to={"/editsitter/" + user.id}
-                className="badge badge-warning"
+                className="btn btn-warning"
                 >
                 Edit
               </Link>

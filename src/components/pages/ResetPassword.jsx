@@ -43,13 +43,12 @@ function ResetPassword() {
     //   };  
 
       const handleResetPassword = (data) =>{
-       // e.preventDefault();
         setMessage("");
         setSuccessful(false);
         setLoading(true);
         AuthService.resetPassword(data.token, data.password).then(
             (response) => {
-              setMessage("Your password has been successfully changed");
+              setMessage("You have successfully changed your password.");
               setSuccessful(true);
               setLoading(false);
               console.log(response.data);
@@ -122,7 +121,7 @@ function ResetPassword() {
                             {message && (
                                 <div className="form-group">
                                 <div
-                                      className={ successful ? "alert alert-success" : "alert alert-danger" }
+                                    className={ successful ? "alert alert-success" : "alert alert-danger" }
                                       role="alert"
                                     >
                                     {message}

@@ -103,9 +103,6 @@ const Profile = () => {
               )}
               <span>Update</span>
             </button>
-      {/* <button className="btn btn-primary" onClick={handleSubmission}>
-        
-      </button> */}
   </div>
   <br />
             </div>

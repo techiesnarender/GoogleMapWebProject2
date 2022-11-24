@@ -66,7 +66,7 @@ const EditSitter = () => {
         .then(response => {
             setCurrentUser({ ...currentUser});
           console.log(response.data);
-          setMessage("The User was updated successfully!");
+          setMessage("The User details was updated successfully!");
         })
         .catch(e => {
           console.log(e);
@@ -158,23 +158,28 @@ const EditSitter = () => {
           </div>
 
         </form>
-        <button className="badge badge-danger mr-2" onClick={deleteUser}>
+        <button className="btn btn-danger mr-2" onClick={deleteUser}>
           Delete
         </button>
 
         <button
           type="submit"
-          className="badge badge-success"
+          className="btn btn-success"
           onClick={updateUser}
         >
           Update
         </button>
-        <p>{message}</p>
+        {message && (
+              <div
+                className= "alert alert-success mt-3"
+                role="alert"
+              >
+                {message}
+              </div>
+          )}
       </div>
     ) : (
       <div>
-        <br />
-        <p>Please click on a Tutorial...</p>
       </div>
     )}
   </div>
