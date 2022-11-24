@@ -30,3 +30,12 @@ label {
     max-width: 500px;
     margin: auto;
   }
+
+  .content {
+    margin: 20px 0;
+  }
+  
+  .preview {
+    max-width: 200px !important;
+    max-height: 200px !important;
+  }

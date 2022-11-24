@@ -48,7 +48,7 @@ const Profile = () => {
     formData.append('email', currentUser.email);
 
 		fetch(
-			//'http://localhost:8080/api/users/uploadFile',
+      //'http://localhost:8080/api/users/uploadFile',
       'https://tomcat1.shiftescape.com/api/users/uploadFile',
 			{
 				method: 'POST',

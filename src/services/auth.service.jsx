@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL = "https://tomcat1.shiftescape.com/api/";
-//const API_URL = "http://localhost:8080/api/"
+//const API_URL = "https://tomcat1.shiftescape.com/api/";
+const API_URL = "http://localhost:8080/api/"
 
 const login = (email, password) => {
   return axios

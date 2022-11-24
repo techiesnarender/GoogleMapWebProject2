@@ -14,6 +14,7 @@ import ForgetPassword from "./components/pages/ForgetPassword";
 import ResetPassword from "./components/pages/ResetPassword";
 import EditSitter from "./components/pages/EditSitter";
 import TestFormValidation from "./components/pages/TestFormValidation";
+import TestImagePreview from "./components/pages/TestImagePreview";
 
 const  App = () => {
   return (
@@ -26,6 +27,7 @@ const  App = () => {
             <Route  path="/register" element={<Registration />} />
             <Route  path="/search" element={< SearchSitter />} />
             <Route  path="/formvalidation" element={< TestFormValidation />} />
+            <Route  path="/imagepreview" element={< TestImagePreview />} />
             <Route  path="/admin/sitterlist" element={<SitterList />} />
             <Route  path="/profile" element={<Profile />} />
             <Route  path="/login" element={<Login />} />

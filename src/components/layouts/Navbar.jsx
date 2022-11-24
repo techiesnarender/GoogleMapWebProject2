@@ -41,6 +41,11 @@ const Navbar = () => {
               Test Validation
             </Link>
           </li> */}
+          <li className="nav-item">
+            <Link to={"/imagepreview"} className="nav-link">
+              Image Preview
+            </Link>
+          </li>
           {showAdminBoard && (
             <li className="nav-item">
               <Link to={"/admin/sitterlist"} className="nav-link">

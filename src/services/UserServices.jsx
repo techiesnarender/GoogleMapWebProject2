@@ -25,13 +25,28 @@ const findNearestLocation = (address, latitude, longitude) => {
   return http.get(`/users/search?address=${address}&latitude=${latitude}&longitude=${longitude}`);
 }
 
+const upload = (file, email,  onUploadProgress) => {
+  let formData = new FormData();
+
+  formData.append("file", file);
+  formData.append('email', email);
+
+  return http.post("/users/uploadFile", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    onUploadProgress,
+  });
+};
+
 const UserServices =  {
   getAll,
   get,
   create,
   update,
   remove,
-  findNearestLocation
+  findNearestLocation,
+  upload
 };
 
 export default  UserServices;
