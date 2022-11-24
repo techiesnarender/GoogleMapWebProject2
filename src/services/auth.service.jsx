@@ -1,11 +1,7 @@
-import axios from "axios";
-
-const API_URL = "https://tomcat1.shiftescape.com/api/";
-//const API_URL = "http://localhost:8080/api/"
-
+import http from "../http-common";
 const login = (email, password) => {
-  return axios
-    .post(API_URL + "auth/signin", {
+  return http
+    .post("auth/signin", {
       email,
       password,
     })
@@ -20,8 +16,8 @@ const login = (email, password) => {
 };
 
 const changepassword = (oldpassword, newpassword, email) =>{
-  return axios
-    .post(API_URL + "users/changepassword", {
+  return http
+    .post("users/changepassword", {
       oldpassword,
       newpassword,
       email,
@@ -34,8 +30,8 @@ const changepassword = (oldpassword, newpassword, email) =>{
 }
 
 const fogetPassword = (email) =>{
-  return axios
-    .post(API_URL + "forgot_password", {
+  return http
+    .post("forgot_password", {
       email,
     })
     .then((response) => {
@@ -46,8 +42,8 @@ const fogetPassword = (email) =>{
 }
 
 const resetPassword = (token, password) =>{
-  return axios
-    .post(API_URL + "reset_password", {
+  return http
+    .post("reset_password", {
       token,
       password
     })
@@ -56,20 +52,7 @@ const resetPassword = (token, password) =>{
       return response.data;
       
     });
-}
-
-// const uploadImage = (file, email) =>{
-//   return axios
-//     .post(API_URL + "users/uploadFile", {
-//       file,
-//       email
-//     })
-//     .then((response) => {
-//       console.log(response.data);
-//       return response.data;
-      
-//     });
-// }
+  }
 
 const logout = () => {
   localStorage.removeItem("user");
@@ -86,7 +69,6 @@ const AuthService = {
   fogetPassword,
   resetPassword,
   getCurrentUser,
-  //uploadImage,
 };
 
 export default AuthService;
