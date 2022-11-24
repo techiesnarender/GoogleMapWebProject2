@@ -126,11 +126,6 @@ const upload = () => {
     /> 
     </div>
      }
-    {/* {previewImage && (
-      <div>
-        <img className="preview avatar rounded-circle img-thumbnail" src={previewImage} alt="" />
-      </div>
-    )} */}
         <label className="btn btn-default p-0">
           <input type="file" accept="image/*" onChange={selectFile} />
         </label>
@@ -152,7 +147,7 @@ const upload = () => {
 
 <div className="col-4">
         <button
-          className="btn btn-success btn-sm"
+          className="btn btn-success"
           disabled={!currentFile}
           onClick={upload}
         >
