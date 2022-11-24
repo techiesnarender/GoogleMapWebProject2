@@ -1,22 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import UserServices from "../../services/UserServices";
 
 const Profile = () => {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   /** Fecth Current user details */
   const currentUser = AuthService.getCurrentUser();
-  const [loading, setLoading] = useState(false);
-
   const currentUserId = currentUser.id;
   //console.log(currentUserId);
+
   const [users, setUser] = useState({});
+  const [loading, setLoading] = useState(false);
+  // const [selectedFile, setSelectedFile] = useState();
+  // const [loadingImg, setImgLoading] = useState(false);
+  // Preview image code start here
+  const [currentFile, setCurrentFile] = useState(undefined);
+  const [previewImage, setPreviewImage] = useState(undefined);
+  const [progress, setProgress] = useState(0);
+  const [message, setMessage] = useState("");
+
+  const selectFile = (event) => {
+    setCurrentFile(event.target.files[0]);
+    setPreviewImage(URL.createObjectURL(event.target.files[0]));
+    setProgress(0);
+    setMessage("");
+  };
+
 
   useEffect(() => {
       retrieveUser();
       // eslint-disable-next-line
   },[]);
+
 
   const retrieveUser = () =>{
     setLoading(true);
@@ -33,43 +49,61 @@ const Profile = () => {
 
 /** Upload image code.. */
 
-	const [selectedFile, setSelectedFile] = useState();
-  const [loadingImg, setImgLoading] = useState(false);
-	const changeHandler = (event) => {
-		setSelectedFile(event.target.files[0]);
+const upload = () => {
+  setProgress(0);
+  UserServices.upload(currentFile, currentUser.email, (event) => {
+    setProgress(Math.round((100 * event.loaded) / event.total));
+  })
+    .then((response) => {
+      setMessage(response.data.message);
+    })
+    .catch((err) => {
+      setProgress(0);
+      if (err.response && err.response.data && err.response.data.message) {
+        setMessage(err.response.data.message);
+      } else {
+        setMessage("Could not upload the Image!");
+      }
+      setCurrentFile(undefined);
+    });
+};
+
+
+	// const changeHandler = (event) => {
+	// 	setSelectedFile(event.target.files[0]);
    
-	};
+	// };
 
-	const handleSubmission = () => {
-    setImgLoading(true);
-		const formData = new FormData();
+	// const handleSubmission = () => {
+  //   setImgLoading(true);
+	// 	const formData = new FormData();
 
-		formData.append('file', selectedFile);
-    formData.append('email', currentUser.email);
+	// 	formData.append('file', selectedFile);
+  //   formData.append('email', currentUser.email);
 
-		fetch(
-      //'http://localhost:8080/api/users/uploadFile',
-      'https://tomcat1.shiftescape.com/api/users/uploadFile',
-			{
-				method: 'POST',
-				body: formData,
-			}
-		)
-			.then( 
-        () => {
-          navigate("/profile");
-          window.location.reload();
-        },
-        (response) => response.json() )
-			.then((result) => {
-				console.log('Success:', result);
-        setImgLoading(false);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-        setImgLoading(false);
-			});
-	} ;
+	// 	fetch(
+  //     //'http://localhost:8080/api/users/uploadFile',
+  //     'https://tomcat1.shiftescape.com/api/users/uploadFile',
+	// 		{
+	// 			method: 'POST',
+	// 			body: formData,
+	// 		}
+	// 	)
+	// 		.then( 
+  //       () => {
+  //         navigate("/profile");
+  //         window.location.reload();
+  //       },
+  //       (response) => response.json() )
+	// 		.then((result) => {
+	// 			console.log('Success:', result);
+  //       setImgLoading(false);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error('Error:', error);
+  //       setImgLoading(false);
+	// 		});
+	// } ;
 	
   return (
     <div className="container">
@@ -78,7 +112,62 @@ const Profile = () => {
         <span className="spinner-border" style={{ position: "fixed", zIndex:"1031", top:"50%", left: "50%", transform: "initial" }}></span>
         )}
        <div className="row">
-          <div className="col-sm-3">     
+       <div className="col-sm-3"> 
+    {previewImage ? (
+    <div>
+        <img className="preview avatar rounded-circle img-thumbnail" src={previewImage} alt="" />
+    </div>
+    ) :
+    <div>
+    <img
+      src={users.logo}
+      className="preview avatar rounded-circle img-thumbnail"
+      alt={users.contactname}
+    /> 
+    </div>
+     }
+    {/* {previewImage && (
+      <div>
+        <img className="preview avatar rounded-circle img-thumbnail" src={previewImage} alt="" />
+      </div>
+    )} */}
+        <label className="btn btn-default p-0">
+          <input type="file" accept="image/*" onChange={selectFile} />
+        </label>
+
+        {currentFile && (
+      <div className="progress my-3">
+        <div
+          className="progress-bar progress-bar-info"
+          role="progressbar"
+          aria-valuenow={progress}
+          aria-valuemin="0"
+          aria-valuemax="100"
+          style={{ width: progress + "%" }}
+        >
+          {progress}%
+        </div>
+      </div>
+    )}
+
+<div className="col-4">
+        <button
+          className="btn btn-success btn-sm"
+          disabled={!currentFile}
+          onClick={upload}
+        >
+          Upload
+        </button>
+      </div>
+    </div>
+    {message && (
+      <div className="alert alert-secondary mt-3" role="alert">
+        {message}
+      </div>
+    )}
+    
+         
+          {/* <div className="col-sm-3">     
           <div className="text-center">
             
     <img
@@ -105,7 +194,9 @@ const Profile = () => {
             </button>
   </div>
   <br />
-            </div>
+      </div> */}
+
+
           <div className="col-sm-9">
          
           <header className="jumbotron">

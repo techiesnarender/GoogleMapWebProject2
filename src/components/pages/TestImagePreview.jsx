@@ -4,7 +4,7 @@ import UserServices from '../../services/UserServices';
 
 const TestImagePreview = () => {
   /** Fecth Current user details */
-  const currentUser = AuthService.getCurrentUser();
+    const currentUser = AuthService.getCurrentUser();
     const [currentFile, setCurrentFile] = useState(undefined);
     const [previewImage, setPreviewImage] = useState(undefined);
     const [progress, setProgress] = useState(0);
