@@ -190,10 +190,8 @@ const upload = () => {
       </div> */}
 
 
-          <div className="col-sm-9">
-         
-          <header className="jumbotron">
-          
+          <div className="col-sm-9">       
+          <header className="jumbotron"> 
           <p>
             <strong>Contact Name:</strong> <span>{users.contactname}</span>
           </p>

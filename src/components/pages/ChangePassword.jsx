@@ -1,33 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 import AuthService from '../../services/auth.service';
 
 const ChangePassword = () => {
 
+  const validationSchema = Yup.object().shape({
+    oldpassword: Yup.string()
+      .required('Old password is required'),
+    newpassword: Yup.string()
+      .required('New password is required')
+      .min(4, 'Password must be at least 4 characters')
+      .max(40, 'Password must not exceed 40 characters'),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
+
     const currentUser = AuthService.getCurrentUser();
-    const [oldpassword, setOldPassword] = useState("");
-    const [newpassword, setNewPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
-    const onChangeOldPassword = (e) => {
-        const oldpassword = e.target.value;
-        setOldPassword(oldpassword);
-      };
-      const onChangeNewPassword = (e) => {
-        const newpassword = e.target.value;
-        setNewPassword(newpassword);
-      };
-
-    const handleChangePassword = (e) =>{
-        e.preventDefault();
+    const handleChangePassword = (data) =>{
         setMessage("");
         setSuccessful(false);
         setLoading(true);
-        AuthService.changepassword(oldpassword, newpassword, currentUser.email).then(response => {
+        AuthService.changepassword(data.oldpassword, data.newpassword, currentUser.email).then(response => {
           setMessage("You have successfully changed your password.");
           setSuccessful(true);
           setLoading(false);
+          console.log(JSON.stringify(data, null, 2));
           console.log(response.data);  
       },
       (error) => {
@@ -50,27 +59,27 @@ const ChangePassword = () => {
       <div className="card-header p-3 mb-2 bg-dark text-white">
             Change Password
       </div>
-        <form onSubmit={handleChangePassword}>     
+        <form onSubmit={handleSubmit(handleChangePassword)}>     
           <div>
           <div className="form-group">
             <label htmlFor="oldpassword">Old password</label>
             <input
               type="password"
-              className="form-control"
               name="oldpassword"
-              value={oldpassword}
-              onChange={onChangeOldPassword}
+              {...register('oldpassword')}
+              className={`form-control ${errors.oldpassword ? 'is-invalid' : ''}`}
             />
+             <div className="invalid-feedback">{errors.oldpassword?.message}</div>
           </div>
           <div className="form-group">
             <label htmlFor="newpassword">New password</label>
             <input
               type="password"
-              className="form-control"
               name="newpassword"
-              value={newpassword}
-              onChange={onChangeNewPassword}
+              {...register('newpassword')}
+              className={`form-control ${errors.newpassword ? 'is-invalid' : ''}`}
             />
+             <div className="invalid-feedback">{errors.newpassword?.message}</div>
           </div>
           <div className="form-group">
             <button className="btn btn-primary btn-block" disabled={loading}>

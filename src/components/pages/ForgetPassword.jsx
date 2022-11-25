@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import AuthService from '../../services/auth.service';
 
 function ForgetPassword() {
-
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required('Email is required')
@@ -15,7 +14,6 @@ function ForgetPassword() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [successful, setSuccessful] = useState(false);
-
     const {
       register,
       handleSubmit,
@@ -23,7 +21,6 @@ function ForgetPassword() {
     } = useForm({
       resolver: yupResolver(validationSchema)
     });   
-
       const handleForgetPassword = (data) =>{
          setMessage("");
          setLoading(true);
@@ -98,5 +95,4 @@ function ForgetPassword() {
     </div>
   )
 }
-
 export default ForgetPassword
