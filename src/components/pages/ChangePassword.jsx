@@ -12,12 +12,13 @@ const ChangePassword = () => {
   const [message, setMessage] = useState("");
 
     const validationSchema = Yup.object().shape({
-      oldpassword: Yup.string()
+        oldpassword: Yup.string()
         .required('Old password is required'),
-      newpassword: Yup.string()
-        .required('New password is required')
+        newpassword: Yup.string()
+        .required('New Password is required')
         .min(4, 'Password must be at least 4 characters')
-        .max(40, 'Password must not exceed 40 characters'),
+        .max(40, 'Password must not exceed 40 characters')
+        .notOneOf([Yup.ref('oldpassword'), null], 'New password must be different'),
     });
 
     const {
