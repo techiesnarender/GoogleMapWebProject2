@@ -38,7 +38,7 @@ const  SitterList = () => {
         {loading && (
         <span className="spinner-border" style={{ position: "fixed", zIndex:"1031", top:"50%", left: "50%", transform: "initial" }}></span>
         )}
-        <div class="table-responsive">
+        <div className="table-responsive">
        <table className="table table-striped table-bordered table-hover table-sm" id="myTable"> 
           <thead className="table-primary">
             <tr>

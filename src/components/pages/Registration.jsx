@@ -157,58 +157,148 @@ const Registration = () => {
 	const [submitted, setSubmitted] = useState(false);
 	const [loading, setLoading] = useState(false);
 
+  /** Show error message variable */
+   const [contactNameErr, setContactNameError] = useState({});
+   const [emailErr, setEmailError] = useState({});
+   const [passwordErr, setPasswordError] = useState({});
+   const [companyNameErr, setCompanyNameError] = useState({});
+   const [addressErr, setAddressError] = useState({});
+   const [openTimeErr, setOpenTimeError] = useState({});
+   const [closeTimeErr, setCloseTimeError] = useState({});
+   const [chargesErr, setChargesError] = useState({});
+
 	const handleInputChange = event => {
 		const {name, value} = event.target;
 		setUser({...users, [name]: value});	
 	};
-	
-	const saveUser = (e) =>{
-		setLoading(true);
-		var data = {
-			contactname: users.contactname,
-			email: users.email,
-			password: users.password,
-			company: users.company,
-			address: users.address,
-			latitude: users.latitude,
-			longitude: users.longitude,
-			open: users.open,
-			close: users.close,
-			chargesperhour: users.chargesperhour,
-			logo: users.logo,
-			enabled: users.enabled
-		}
 
-	UserServices.create(data)
-		.then(response => {
-			setUser({
-				id: response.data.id,
-				contactname: response.data.contactname,
-				email: response.data.email,
-				password: response.data.password,
-				company: response.data.company,
-				address: response.data.address,
-				latitude: response.data.latitude,
-				longitude: response.data.longitude,
-				open: response.data.open,
-				close: response.data.close,
-				chargesperhour: response.data.chargesperhour,
-				logo: response.data.logo,
-				enabled: response.data.enabled
-			});		
-			setSubmitted(true);
-			setLoading(false);
-			console.log(response.data);
-		})
-		.catch(e =>{
-			setLoading(false);
-			console.log(e);
-		})
+	const saveUser = e =>{
+    e.preventDefault();
+    const isValid = formValidation();
+    
+    if(isValid){
+      setLoading(true);
+      var data = {
+        contactname: users.contactname,
+        email: users.email,
+        password: users.password,
+        company: users.company,
+        address: users.address,
+        latitude: users.latitude,
+        longitude: users.longitude,
+        open: users.open,
+        close: users.close,
+        chargesperhour: users.chargesperhour,
+        logo: users.logo,
+        enabled: users.enabled
+      }
+
+      UserServices.create(data)
+      .then(response => {
+        setUser({
+          id: response.data.id,
+          contactname: response.data.contactname,
+          email: response.data.email,
+          password: response.data.password,
+          company: response.data.company,
+          address: response.data.address,
+          latitude: response.data.latitude,
+          longitude: response.data.longitude,
+          open: response.data.open,
+          close: response.data.close,
+          chargesperhour: response.data.chargesperhour,
+          logo: response.data.logo,
+          enabled: response.data.enabled
+        });		
+        setSubmitted(true);
+        setLoading(false);
+        console.log(response.data);
+      })
+      .catch(e =>{
+        setLoading(false);
+        console.log(e);
+      })
+    }
+     
 	};
+
 	const newUser = () => {
 		setUser(initialUserService);
 		setSubmitted(false);
 	};
+
+  const formValidation = () => {
+// eslint-disable-next-line
+//let regx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const validateEmail = (email) => {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
+
+    const contactNameErr = {};
+    const emailErr = {};
+    const passwordErr = {};
+    const companyNameErr = {};
+    const addressErr = {};
+    const openTimeErr = {};
+    const closeTimeErr = {};
+    const chargesErr = {};
+    let isValid = true;
+
+
+    if(users.contactname.trim() === null || users.contactname.trim() === ""){
+      contactNameErr.contactNameNull = "Contact name is required!";
+      isValid = false;
+    }
+    if(users.email.trim() === null || users.email.trim() === ""){
+      emailErr.emailNull = "Email is required!";
+      isValid = false;
+    }else if(!validateEmail(users.email)){
+      emailErr.emailInvalid = "Invalid email address";
+      isValid = false;
+    }
+    
+    if(users.password.trim() === ""){
+      passwordErr.passwordNull = "Password is required!";
+      isValid = false;
+    }else if(users.password.trim().length < 4  ){
+      passwordErr.passwordToShort = "Password must be at least 4 characters";
+      isValid = false;
+    }
+    if(users.company.trim() === null || users.company.trim() === ""){
+      companyNameErr.companyNameNull = "Company name is required!";
+      isValid = false;
+    }
+    if(users.address.trim() === null || users.address.trim() === ""){
+      addressErr.addressNull = "Address is required!";
+      isValid = false;
+    }
+    if(users.open.trim() === null || users.open.trim() === ""){
+      openTimeErr.openTimeNull = "Open time is required!";
+      isValid = false;
+    }
+    if(users.close.trim() === null || users.close.trim() === ""){
+      closeTimeErr.closeTimeNull = "Close time is required!";
+      isValid = false;
+    }
+    if(users.chargesperhour.trim() === null || users.chargesperhour.trim() === ""){
+      chargesErr.chargesNull = "Charges is required!";
+      isValid = false;
+    }
+
+    setContactNameError(contactNameErr);
+    setEmailError(emailErr);
+    setPasswordError(passwordErr);
+    setCompanyNameError(companyNameErr);
+    setAddressError(addressErr);
+    setOpenTimeError(openTimeErr);
+    setCloseTimeError(closeTimeErr);
+    setChargesError(chargesErr);
+    return isValid;
+  }
+
     return(
 		<div className="submit-form">
 			{submitted ? (
@@ -228,32 +318,47 @@ const Registration = () => {
 						<div className="form-group row">
 							<label htmlFor="contactname" className="col-sm-3 col-form-label font-weight-bold"> Name :</label>
 							<div className="col-sm-9">
-								<input type="text" id="contactname" name="contactname" className="form-control" value={users.contactname} onChange={handleInputChange} placeholder="Contact name"/>								
-							</div>
+								<input type="text" id="contactname" name="contactname" className="form-control" value={users.contactname} onChange={handleInputChange} placeholder="Contact name" maxLength={35}/>								
+                {Object.keys(contactNameErr).map((key)=>{
+                return <div style={{color : "red"}} key="{contactNameErr}">{contactNameErr[key]}</div>
+                })}
+              </div>
 						</div>
 						<div className="form-group row">
 							<label htmlFor="email" className="col-sm-3 col-form-label font-weight-bold">Email :</label>
 							<div className="col-sm-9">
-								<input type="text" name="email" className="form-control" id="email" value={users.email} onChange={handleInputChange} placeholder="Ex: john@gmail.com"/>	
-							</div>
+								<input type="text" name="email" className="form-control" id="email" value={users.email} onChange={handleInputChange} placeholder="Ex: john@gmail.com" maxLength={64}/>	
+                {Object.keys(emailErr).map((key)=>{
+                return <div style={{color : "red"}} key="{emailErr}">{emailErr[key]}</div>
+                })}
+              </div>
 						</div>
 						<div className="form-group row">
 							<label htmlFor="password" className="col-sm-3 col-form-label font-weight-bold">Password :</label>
 							<div className="col-sm-9">
-								<input type="password" name="password" className="form-control" id="password" value={users.password} onChange={handleInputChange} placeholder="Password"/>	
-							</div>
+								<input type="password" name="password" className="form-control" id="password" value={users.password} onChange={handleInputChange} placeholder="Password" maxLength={40}/>	
+                {Object.keys(passwordErr).map((key)=>{
+                return <div style={{color : "red"}} key="{passwordErr}">{passwordErr[key]}</div>
+                })}
+              </div>
 						</div>
 						<div className="form-group row">
 						   <label htmlFor="companyname" className="col-sm-3 col-form-label font-weight-bold">Company / Display Name :</label>
 							  <div className="col-sm-9">
-									   <input type="text" name="company" className="form-control" id="company" value={users.company} onChange={handleInputChange} placeholder="Enter your company name" />	  
-							 </div>
+                  <input type="text" name="company" className="form-control" id="company" value={users.company} onChange={handleInputChange} placeholder="Enter your company name" />	  
+                  {Object.keys(companyNameErr).map((key)=>{
+                  return <div style={{color : "red"}} key="{companyNameErr}">{companyNameErr[key]}</div>
+                  })}
+               </div>
 						 </div>
 						 <div className="form-group row">
 							 <label htmlFor="map-search" className="col-sm-3 col-form-label font-weight-bold">Address :</label>
 							   <div className="col-sm-9">
 								   <input type="text" name="address" className="form-control" id="map-search" value={users.address} onChange={handleInputChange} placeholder="Enter your full address" />
-							 </div>
+                   {Object.keys(addressErr).map((key)=>{
+                  return <div style={{color : "red"}} key="{addressErr}">{addressErr[key]}</div>
+                  })}
+               </div>
 						 </div>
 						 <div className="form-group row">
 							 <label htmlFor="location" className="col-sm-3 col-form-label font-weight-bold">Location :</label>
@@ -275,11 +380,17 @@ const Registration = () => {
 										  <div className="form-group col-sm-6">
 												  <label htmlFor="opentime" className="font-weight-bold col-form-label">Opening Hour's :</label>
 													  <input type="text" name="open" id="open" value={users.open} onChange={handleInputChange} className="form-control" placeholder="Open" />
-										 </div>
+                            {Object.keys(openTimeErr).map((key)=>{
+                          return <div style={{color : "red"}} key="{openTimeErr}">{openTimeErr[key]}</div>
+                          })}
+                     </div>
 										 <div className="form-group col-sm-6">
 												  <label htmlFor="closetime" className="font-weight-bold col-form-label">Closes Hour's :</label>
 													  <input type="text" name="close" id="close" value={users.close} onChange={handleInputChange} className="form-control" placeholder="Closes" />
-										 </div>
+                            {Object.keys(closeTimeErr).map((key)=>{
+                            return <div style={{color : "red"}} key="{closeTimeErr}">{closeTimeErr[key]}</div>
+                            })}
+                     </div>
 									 </div>
 								 </div>
 						 </div>	
@@ -293,7 +404,9 @@ const Registration = () => {
 										<span className="input-group-text font-weight-bold" id="basic-addon2">/hr</span>
 									  </div>
 									</div>
-								   
+                  {Object.keys(chargesErr).map((key)=>{
+                  return <div style={{color : "red"}} key="{chargesErr}">{chargesErr[key]}</div>
+                  })}
 							 </div>
 						 </div>
 						 
@@ -306,7 +419,7 @@ const Registration = () => {
 						</div> */}
 						<input type="hidden" name="enabled" id="enabled" className="form-control" value={users.enabled} onChange={handleInputChange} />
 								 
-						<button className="btn btn-primary" disabled={loading} onClick={saveUser}>
+						<button className="btn btn-primary" disabled={loading}  onClick={saveUser}>
 						{loading && (
 							<span className="spinner-border spinner-border-sm"></span>
 						)}
