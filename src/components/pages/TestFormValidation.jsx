@@ -7,7 +7,10 @@ import * as Yup from 'yup';
 import AuthService from "../../services/auth.service";
 
 const TestFormValidation = () => {
-
+  let navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  
     const validationSchema = Yup.object().shape({
         email: Yup.string()
           .required('Email is required')
@@ -18,10 +21,6 @@ const TestFormValidation = () => {
           .max(40, 'Password must not exceed 40 characters'),
       });
 
-      const [loading, setLoading] = useState(false);
-      const [message, setMessage] = useState("");
-      let navigate = useNavigate();
-
       const {
         register,
         handleSubmit,
@@ -30,11 +29,9 @@ const TestFormValidation = () => {
         resolver: yupResolver(validationSchema)
       });
 
-
       const onSubmit = data => {
         setMessage("");
         setLoading(true);
-
         console.log(JSON.stringify(data, null, 2));
       AuthService.login(data.email, data.password).then(
         () => {
@@ -53,9 +50,7 @@ const TestFormValidation = () => {
           setMessage( resMessage);
         }
       );
-
       };
-
   return (
     <div className="col-md-12">
       <div className="card card-container">
@@ -64,7 +59,6 @@ const TestFormValidation = () => {
           alt="profile-img"
           className="profile-img-card"
         />
-
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
@@ -76,7 +70,6 @@ const TestFormValidation = () => {
             />
             <div className="invalid-feedback">{errors.email?.message}</div>
           </div>
-
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -87,7 +80,6 @@ const TestFormValidation = () => {
             />
              <div className="invalid-feedback">{errors.password?.message}</div>
           </div>
-
           <div className="form-group">
             <button className="btn btn-primary btn-block" disabled={loading}>
               {loading && (
@@ -96,7 +88,6 @@ const TestFormValidation = () => {
               <span>Login</span>
             </button>
           </div>
-
           {message && (
             <div className="form-group">
               <div className="alert alert-danger" role="alert">
@@ -112,5 +103,4 @@ const TestFormValidation = () => {
     </div>
   );
 };
-
 export default TestFormValidation;

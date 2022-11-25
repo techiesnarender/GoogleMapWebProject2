@@ -5,15 +5,16 @@ import * as Yup from 'yup';
 import AuthService from '../../services/auth.service';
 
 function ForgetPassword() {
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [successful, setSuccessful] = useState(false);
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required('Email is required')
       .email('Email is invalid'),
   });
-
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
-    const [successful, setSuccessful] = useState(false);
     const {
       register,
       handleSubmit,
@@ -21,10 +22,10 @@ function ForgetPassword() {
     } = useForm({
       resolver: yupResolver(validationSchema)
     });   
-      const handleForgetPassword = (data) =>{
+
+      const handleForgetPassword = data =>{
          setMessage("");
          setLoading(true);
-
         AuthService.fogetPassword(data.email).then(response => {
           console.log(JSON.stringify(data, null, 2));
           setMessage("We have sent a reset password link to your email. Please check.");
@@ -39,14 +40,12 @@ function ForgetPassword() {
             error.response.data.message) ||
           error.message ||
           error.toString();
-
         setMessage(resMessage);
         setSuccessful(false);
         setLoading(false);
       }
         );
     }
-
   return (
     <div className="container" style={{width: '40rem'}}>
 			<div className="card">

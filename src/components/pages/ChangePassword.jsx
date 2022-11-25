@@ -6,29 +6,29 @@ import AuthService from '../../services/auth.service';
 
 const ChangePassword = () => {
 
-  const validationSchema = Yup.object().shape({
-    oldpassword: Yup.string()
-      .required('Old password is required'),
-    newpassword: Yup.string()
-      .required('New password is required')
-      .min(4, 'Password must be at least 4 characters')
-      .max(40, 'Password must not exceed 40 characters'),
-  });
+  const currentUser = AuthService.getCurrentUser();
+  const [loading, setLoading] = useState(false);
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    resolver: yupResolver(validationSchema)
-  });
+    const validationSchema = Yup.object().shape({
+      oldpassword: Yup.string()
+        .required('Old password is required'),
+      newpassword: Yup.string()
+        .required('New password is required')
+        .min(4, 'Password must be at least 4 characters')
+        .max(40, 'Password must not exceed 40 characters'),
+    });
 
-    const currentUser = AuthService.getCurrentUser();
-    const [loading, setLoading] = useState(false);
-    const [successful, setSuccessful] = useState(false);
-    const [message, setMessage] = useState("");
+    const {
+      register,
+      handleSubmit,
+      formState: { errors }
+    } = useForm({
+      resolver: yupResolver(validationSchema)
+    });
 
-    const handleChangePassword = (data) =>{
+    const handleChangePassword = data =>{
         setMessage("");
         setSuccessful(false);
         setLoading(true);

@@ -153,7 +153,6 @@ const Registration = () => {
 		logo: "//ssl.gstatic.com/accounts/ui/avatar_2x.png",
 		enabled: true,
 	};
-
 	const [users, setUser] = useState(initialUserService);
 	const [submitted, setSubmitted] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -206,12 +205,10 @@ const Registration = () => {
 			console.log(e);
 		})
 	};
-
 	const newUser = () => {
 		setUser(initialUserService);
 		setSubmitted(false);
 	};
-
     return(
 		<div className="submit-form">
 			{submitted ? (
@@ -256,10 +253,8 @@ const Registration = () => {
 							 <label htmlFor="map-search" className="col-sm-3 col-form-label font-weight-bold">Address :</label>
 							   <div className="col-sm-9">
 								   <input type="text" name="address" className="form-control" id="map-search" value={users.address} onChange={handleInputChange} placeholder="Enter your full address" />
-								  
 							 </div>
 						 </div>
-						 
 						 <div className="form-group row">
 							 <label htmlFor="location" className="col-sm-3 col-form-label font-weight-bold">Location :</label>
 							   <div className="col-sm-9">

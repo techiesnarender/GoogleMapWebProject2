@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import UserServices from "../../services/UserServices";
 
 const  SitterList = () => {
-
-    const [users, setUser] = useState([]);
     const effectRan = useRef(false);
+    const [users, setUser] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -33,18 +32,18 @@ const  SitterList = () => {
             setMessage("Something went wrong!");
         });
     };
-
     return (
         <>
         <h4 className="text-center">Sitter Records</h4>	
         {loading && (
         <span className="spinner-border" style={{ position: "fixed", zIndex:"1031", top:"50%", left: "50%", transform: "initial" }}></span>
         )}
-       <table className="table" id="myTable"> 
-          <thead className="thead-dark">
+        <div class="table-responsive">
+       <table className="table table-striped table-bordered table-hover table-sm" id="myTable"> 
+          <thead className="table-primary">
             <tr>
               <th>S No.</th>
-              <th>Company Logo</th>
+              <th>Logo</th>
               <th>Company Name</th>
               <th>Name</th>
               <th>Email</th>
@@ -58,7 +57,7 @@ const  SitterList = () => {
              {users && users.length > 0 && users.map((user, index) => (
                 <tr key={user.id}>
                 <td>{index + 1}</td>
-                <td><img src={user.logo} alt={users.contactname} draggable= "true" style={{height:"50px", width: "50px"}} /></td>
+                <td><img src={user.logo} alt={users.contactname} draggable= "true" style={{height:"30px", width: "30px"}} /></td>
                 <td>{user.company}</td>
                 <td>{user.contactname}</td>
                 <td>{user.email}</td>
@@ -74,10 +73,10 @@ const  SitterList = () => {
               </Link>
                 </td>       
                 </tr>
-             ))}
-           
+             ))}    
           </tbody>
         </table>
+        </div>
         {message && (    
               <span className="alert alert-danger " role="alert" style={{ position: "fixed", zIndex:"1031", left: "45%", transform: "initial" }}>
                 {message}
@@ -86,7 +85,6 @@ const  SitterList = () => {
       </>
     );
 }
-
 export default SitterList;
 
 

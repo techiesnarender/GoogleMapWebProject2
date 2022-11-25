@@ -8,12 +8,8 @@ const Profile = () => {
   /** Fecth Current user details */
   const currentUser = AuthService.getCurrentUser();
   const currentUserId = currentUser.id;
-  //console.log(currentUserId);
-
   const [users, setUser] = useState({});
   const [loading, setLoading] = useState(false);
-  // const [selectedFile, setSelectedFile] = useState();
-  // const [loadingImg, setImgLoading] = useState(false);
   // Preview image code start here
   const [currentFile, setCurrentFile] = useState(undefined);
   const [previewImage, setPreviewImage] = useState(undefined);
@@ -27,12 +23,10 @@ const Profile = () => {
     setMessage("");
   };
 
-
   useEffect(() => {
       retrieveUser();
       // eslint-disable-next-line
   },[]);
-
 
   const retrieveUser = () =>{
     setLoading(true);
@@ -46,9 +40,7 @@ const Profile = () => {
           console.log(e);
       });
   };
-
 /** Upload image code.. */
-
 const upload = () => {
   setProgress(0);
   UserServices.upload(currentFile, currentUser.email, (event) => {
@@ -67,11 +59,8 @@ const upload = () => {
       setCurrentFile(undefined);
     });
 };
-
-
 	// const changeHandler = (event) => {
 	// 	setSelectedFile(event.target.files[0]);
-   
 	// };
 
 	// const handleSubmission = () => {
@@ -104,7 +93,6 @@ const upload = () => {
   //       setImgLoading(false);
 	// 		});
 	// } ;
-	
   return (
     <div className="container">
       <h3 className="text-center"><strong>Sitter Profile</strong></h3>
@@ -113,7 +101,7 @@ const upload = () => {
         )}
        <div className="row">
        <div className="col-sm-3"> 
-       <div style={{width: "200px", height: "200px"}}>
+       <div className="circle">
           {previewImage ? (  
               <img className="avatar rounded-circle img-thumbnail" src={previewImage} alt="" /> 
           ) :
@@ -158,8 +146,7 @@ const upload = () => {
         {message}
       </div>
     )}
-    
-         
+     
           {/* <div className="col-sm-3">     
           <div className="text-center">
             
@@ -188,8 +175,6 @@ const upload = () => {
   </div>
   <br />
       </div> */}
-
-
           <div className="col-sm-9">       
           <header className="jumbotron"> 
           <p>
@@ -229,5 +214,4 @@ const upload = () => {
     </div>
   );
 };
-
 export default Profile;

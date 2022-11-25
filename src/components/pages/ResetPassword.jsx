@@ -4,7 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import AuthService from '../../services/auth.service';
 
-function ResetPassword() {
+const ResetPassword = () =>  {
+  const authResult = new URLSearchParams(window.location.search); 
+  const token = authResult.get('token')
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [successful, setSuccessful] = useState(false);
+
   const validationSchema = Yup.object().shape({
     password: Yup.string()
       .required('Password is required')
@@ -22,25 +28,6 @@ function ResetPassword() {
   } = useForm({
     resolver: yupResolver(validationSchema)
   });
-  
-    const authResult = new URLSearchParams(window.location.search); 
-    const token = authResult.get('token')
-
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
-    const [successful, setSuccessful] = useState(false);
-    //const [resetToken, setResetToken] = useState(token);
-    // const [password , setPassword] = useState("");
-
-    // const onChangePassword = (e) => {
-    //     const password = e.target.value;
-    //     setPassword(password);
-    //   };    
-
-    //   const onChangeToken = (e) => {
-    //     const resetToken = e.target.value;
-    //     setResetToken(resetToken);
-    //   };  
 
       const handleResetPassword = (data) =>{
         setMessage("");

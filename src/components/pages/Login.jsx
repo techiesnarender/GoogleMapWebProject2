@@ -8,6 +8,10 @@ import AuthService from "../../services/auth.service";
 
 const Login = () => {
 
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  let navigate = useNavigate();
+
     const validationSchema = Yup.object().shape({
         email: Yup.string()
           .required('Email is required')
@@ -17,10 +21,6 @@ const Login = () => {
           .min(4, 'Password must be at least 4 characters')
           .max(40, 'Password must not exceed 40 characters'),
       });
-
-      const [loading, setLoading] = useState(false);
-      const [message, setMessage] = useState("");
-      let navigate = useNavigate();
 
       const {
         register,
@@ -34,7 +34,6 @@ const Login = () => {
       const onSubmit = data => {
         setMessage("");
         setLoading(true);
-
         console.log(JSON.stringify(data, null, 2));
       AuthService.login(data.email, data.password).then(
         () => {
@@ -53,7 +52,6 @@ const Login = () => {
           setMessage( resMessage);
         }
       );
-
       };
   return (
     <div className="col-md-12">

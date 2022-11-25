@@ -18,14 +18,18 @@ const EditSitter = () => {
 
     const [currentUser, setCurrentUser] = useState(initialUserService);
     const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const getUser = id => {
+      setLoading(true);
         UserServices.get(id)
           .then(response => {
             setCurrentUser(response.data);
+            setLoading(false);
             console.log(response.data);
           })
           .catch(e => {
+            setLoading(false);
             console.log(e);
           });
       };
@@ -39,27 +43,6 @@ const EditSitter = () => {
         const { name, value } = event.target;
         setCurrentUser({ ...currentUser, [name]: value });
       };
-
-    //   const updateUser = () => {
-    //     var data = {
-    //       id: currentUser.id,
-    //       contactname: currentUser.contactname,
-    //       email: currentUser.email,
-    //       company: currentUser.company,
-    //       open: currentUser.open,
-    //       close: currentUser.close,
-    //       chargesperhour: currentUser.chargesperhour  
-    //     };
-
-    //     UserServices.update(currentUser.id, data)
-    //     .then(response => {
-    //         setCurrentUser({ ...currentUser});
-    //       console.log(response.data);
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // };
   
     const updateUser = () => {
         UserServices.update(currentUser.id, currentUser)
@@ -82,13 +65,15 @@ const EditSitter = () => {
           .catch(e => {
             console.log(e);
           });
-      };
-      
+      };    
   return (
     <div>
     {currentUser ? (
       <div className="edit-form">
         <h4>Edit Sitter</h4>
+        {loading && (
+        <span className="spinner-border" style={{ position: "fixed", zIndex:"1031", top:"50%", left: "50%", transform: "initial" }}></span>
+        )}
         <form>
           <div className="form-group">
             <label htmlFor="contactname">Contact Name</label>
@@ -156,12 +141,10 @@ const EditSitter = () => {
               onChange={handleInputChange}
             />
           </div>
-
         </form>
         <button className="btn btn-danger mr-2" onClick={deleteUser}>
           Delete
         </button>
-
         <button
           type="submit"
           className="btn btn-success"
@@ -185,5 +168,4 @@ const EditSitter = () => {
   </div>
   )
 }
-
 export default EditSitter;
