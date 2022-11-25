@@ -47,13 +47,13 @@ const ChangePassword = () => {
   return (
     <div className="col-md-12">
       <div className="card card-container">
-      <div className="card-header bg-info text-white">
+      <div className="card-header p-3 mb-2 bg-dark text-white">
             Change Password
       </div>
         <form onSubmit={handleChangePassword}>     
           <div>
           <div className="form-group">
-            <label htmlFor="oldpassword">Old Password</label>
+            <label htmlFor="oldpassword">Old password</label>
             <input
               type="password"
               className="form-control"
@@ -63,7 +63,7 @@ const ChangePassword = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="newpassword">New Password</label>
+            <label htmlFor="newpassword">New password</label>
             <input
               type="password"
               className="form-control"

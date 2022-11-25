@@ -113,19 +113,17 @@ const upload = () => {
         )}
        <div className="row">
        <div className="col-sm-3"> 
-    {previewImage ? (
-    <div>
-        <img className="preview avatar rounded-circle img-thumbnail" src={previewImage} alt="" />
-    </div>
-    ) :
-    <div>
-    <img
-      src={users.logo}
-      className="preview avatar rounded-circle img-thumbnail"
-      alt={users.contactname}
-    /> 
-    </div>
-     }
+       <div style={{width: "200px", height: "200px"}}>
+          {previewImage ? (  
+              <img className="avatar rounded-circle img-thumbnail" src={previewImage} alt="" /> 
+          ) :
+          <img
+            src={users.logo}
+            className="avatar rounded-circle img-thumbnail"
+            alt={users.contactname}
+          /> 
+          }
+     </div>
         <label className="btn btn-default p-0">
           <input type="file" accept="image/*" onChange={selectFile} />
         </label>
