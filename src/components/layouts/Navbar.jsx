@@ -37,6 +37,11 @@ const Navbar = () => {
             </Link>
           </li>
           {/* <li className="nav-item">
+            <Link to={"/searchSitter"} className="nav-link">
+              Test Search Sitter
+            </Link>
+          </li> */}
+          {/* <li className="nav-item">
             <Link to={"/formvalidation"} className="nav-link">
               Test Validation
             </Link>

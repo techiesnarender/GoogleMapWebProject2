@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import UserServices from "../../services/UserServices";
 
-const SearchSitter = () => {
+const SearchSitterTest = () => {
 
   const effectRan = useRef(false);
   const click_ref = React.useRef(null);
@@ -142,7 +142,7 @@ const SearchSitter = () => {
       }
   
       // Code for onclick on tiles show marker lication center with infowindow
-      markers = neighborhoods && neighborhoods.map((location, i) => {
+      markers = neighborhoods.map((location, i) => {
         // var myLatlng = new google.maps.LatLng(location.lat, location.lng);
         var marker = new google.maps.Marker({
           position: location,
@@ -350,4 +350,4 @@ const SearchSitter = () => {
     </div>
   );
 };
-export default SearchSitter;
+export default SearchSitterTest;
