@@ -26,7 +26,7 @@ const Navbar = () => {
           Misha Infotech
         </Link>
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
+          <li className="nav-item active">
             <Link to={"/home"} className="nav-link">
               Home
             </Link>
