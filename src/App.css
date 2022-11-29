@@ -45,17 +45,9 @@ label {
     background-color: #fff;
     border: 1px solid #dee2e6;
     border-radius: 0.25rem;
-    max-width: 100%;
+    max-width:200px;
     height: 200px;
   }
-  .circle {
-    border-radius: 100% !important;
-    overflow: hidden;
-    width: 200px;
-    height: 200px;
-    border: 5px solid #fff;
-    position: relative;
-}
 
 .list-item {
   cursor: pointer;

@@ -101,20 +101,20 @@ const upload = () => {
         )}
        <div className="row">
        <div className="col-sm-3"> 
-       <div className="circle">
           {previewImage ? (  
-              <img className="avatar rounded-circle img-thumbnail" src={previewImage} alt="" /> 
+              <img className="avatar rounded-circle img-thumbnail" src={previewImage} alt="" style={{height:"200px", width:"200px"}} /> 
           ) :
           <img
             src={users.logo}
             className="avatar rounded-circle img-thumbnail"
             alt={users.contactname}
+            style={{height:"200px", width:"200px"}}
           /> 
           }
-     </div>
-        <label className="btn btn-default p-0">
-          <input type="file" accept="image/*" onChange={selectFile} />
-        </label>
+     <label htmlFor="logo" className="col-sm col-form-label font-weight-bold">Upload a different image...</label>
+        <div className="btn btn-default mt-2">
+          <input type="file" id="logo" accept="image/*" onChange={selectFile} />
+        </div>
 
         {currentFile && (
       <div className="progress my-3">
