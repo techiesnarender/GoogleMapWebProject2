@@ -4,6 +4,11 @@ import authHeader from "./auth-header";
 const getAll = () => {
   return http.get("/admin/users", { headers: authHeader() });
 };
+
+const getPublicAll = () => {
+  return http.get("/users");
+};
+
 const get = id => {
   return http.get(`/users/${id}`);
 };
@@ -39,6 +44,10 @@ const upload = (file, email,  onUploadProgress) => {
   });
 };
 
+const getPaginationAll = (params) => {
+  return http.get("/users/paging", { params });
+};
+
 const UserServices =  {
   getAll,
   get,
@@ -46,7 +55,9 @@ const UserServices =  {
   update,
   remove,
   findNearestLocation,
-  upload
+  upload,
+  getPaginationAll,
+  getPublicAll
 };
 
 export default  UserServices;

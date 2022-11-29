@@ -25,7 +25,7 @@ const Navbar = () => {
         <Link to={"/"} className="navbar-brand">
           Misha Infotech
         </Link>
-        <div className="navbar-nav mr-auto">
+        <ul className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/home"} className="nav-link">
               Home
@@ -36,6 +36,11 @@ const Navbar = () => {
               Search Sitter
             </Link>
           </li>
+          {/* <li className="nav-item">
+            <Link to={"/sitterlisttest"} className="nav-link">
+              Test Sitter List
+            </Link>
+          </li> */}
           {/* <li className="nav-item">
             <Link to={"/searchSitter"} className="nav-link">
               Test Search Sitter
@@ -66,9 +71,9 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-        </div>
+        </ul>
         {currentUser ? (
-          <div className="navbar-nav ml-auto">
+          <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown">
               <Link to={"/profile"} className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {currentUser.contactname}
@@ -88,9 +93,9 @@ const Navbar = () => {
                 LogOut
               </a>
             </li>
-          </div>
+          </ul>
         ) : (
-          <div className="navbar-nav ml-auto">
+          <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to={"/login"} className="nav-link">
                 Login
@@ -101,7 +106,7 @@ const Navbar = () => {
                 Sign Up
               </Link>
             </li>
-          </div>
+          </ul>
         )}
       </nav>
     </div>
