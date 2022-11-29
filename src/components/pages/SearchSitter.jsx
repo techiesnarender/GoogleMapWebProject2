@@ -2,6 +2,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import UserServices from "../../services/UserServices";
 
+
+
 const SearchSitter = () => {
 
   const effectRan = useRef(false);
@@ -24,6 +26,7 @@ const SearchSitter = () => {
   const [searchLat, setSearchLat] = useState("");
   const [searchLong, setSearchLong] = useState("");
   const [loading, setLoading] = useState(false);
+  const [active, setActive] = useState(null);
 
   useEffect(() => {
     if (effectRan.current === false) {
@@ -35,7 +38,10 @@ const SearchSitter = () => {
    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+ 
+
   useEffect(() => {
+
 
   var neighborhoods = [];
   neighborhoods =
@@ -49,7 +55,7 @@ const SearchSitter = () => {
       logo: user.logo,
     }));
 
-   console.log("MY Marker",neighborhoods)
+   //console.log("MY Marker",neighborhoods)
 
     const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // eslint-disable-next-line
@@ -58,24 +64,26 @@ const SearchSitter = () => {
     function initMap() {
       //Getting Current geo locations for search box address
      // console.log("MY Marker",neighborhoods)
-      var latElGeo = document.getElementById("lat"),
-        longElGeo = document.getElementById("lng"),
-        error = document.getElementById("demo");
-  
-      window.onload = function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-          error.innerHTML = "Geolocation is not supported by this browser.";
-        }
-      };
-  
-      function showPosition(position) {
-        setNativeValue(latElGeo, position.coords.latitude);
-        latElGeo.dispatchEvent(new Event("input", { bubbles: true }));
-        setNativeValue(longElGeo, position.coords.longitude);
-        longElGeo.dispatchEvent(new Event("input", { bubbles: true }));
-      }
+     var latElGeo = document.getElementById("lat"),
+     longElGeo = document.getElementById("lng"),
+     error = document.getElementById("demo");
+ 
+   const getLocation = () => {
+     if (navigator.geolocation) {
+       navigator.geolocation.getCurrentPosition(showPosition);
+     } else {
+       error.innerHTML = "Geolocation is not supported by this browser.";
+     }
+   };
+ 
+   function showPosition(position) {
+     setNativeValue(latElGeo, position.coords.latitude);
+     latElGeo.dispatchEvent(new Event("input", { bubbles: true }));
+     setNativeValue(longElGeo, position.coords.longitude);
+     longElGeo.dispatchEvent(new Event("input", { bubbles: true }));
+   }
+     getLocation();
+
       // End of Getting Current geo locations for search box address
   
       var mapOptions;
@@ -226,37 +234,6 @@ const SearchSitter = () => {
       setLoading(false);
     });
   };
-  
-  //console.log("User"+users);
-
-  //        // Fetching records based on nearest location
-  //  var neighborhoods =  [
-  //      {lat: 28.64, lng: 77.24 }
-  //     ];
-
-    //   var neighborhoods = [
-    //      users &&
-    //       users.map((user) => ({
-    //         lat: parseFloat(user.latitude),
-    //         lng: parseFloat(user.longitude),
-    //       }))
-    //    ];
-    // console.log(neighborhoods);
-  // Fetching records based on nearest location
- //var neighborhoods = [];
-  // neighborhoods =
-  //   users &&
-  //   users.map((user) => ({
-  //     lat: parseFloat(user.latitude),
-  //     lng: parseFloat(user.longitude),
-  //   }));
-    
-  // console.log("neighborhoods:",neighborhoods);
-  //  var neighborhood = [];
-  //  neighborhood.push(neighborhoods);
-  //  console.log(neighborhood);
-
- // console.log(users);
 
   return (
     <div>
@@ -313,9 +290,12 @@ const SearchSitter = () => {
               users.map((user, index) => (
                 // eslint-disable-next-line
                 <a href="#" className="nav-link" key={user.id} onClick={()=>click_ref.current(index)}>
-                  <div className="card" style={{ width: "33rem" }}>
-                    <div className="card-body">
-                      <div className="row">
+                  <div className="card"
+                  style={{
+                    width: "33rem",                  
+                  }}>
+                    <div  className={`card-body list-item ${active === index && "active"}`} onClick={() => setActive(index)}>
+                      <div className="row ">
                         <div className="col-sm-4">
                           <img
                             src={user.logo} 
