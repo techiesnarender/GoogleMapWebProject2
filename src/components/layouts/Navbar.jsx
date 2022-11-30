@@ -36,11 +36,11 @@ const Navbar = () => {
               Search Sitter
             </Link>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <Link to={"/sitterlisttest"} className="nav-link">
-              Test Sitter List
+              Pagination List
             </Link>
-          </li> */}
+          </li>
           {/* <li className="nav-item">
             <Link to={"/searchSitter"} className="nav-link">
               Test Search Sitter

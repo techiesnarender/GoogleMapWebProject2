@@ -1,26 +1,57 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTable } from "react-table";
+import Pagination from '@mui/material/Pagination'; 
 import UserServices from "../../services/UserServices";
+import { Typography } from "@mui/material";
 
 const SitterListTestPagination = (props) => {
-    const [users, setTutorials] = useState([]);
-    const tutorialsRef = useRef();
-  
-    tutorialsRef.current = users;
-  
-    useEffect(() => {
-      retrieveTutorials();
-    }, []);
+    const [users, setUsers] = useState([]);
+
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(0);
+    const [pageSize, setPageSize] = useState(6);
+
+  const pageSizes = [6, 9];
+
+  const getRequestParams = (page, pageSize) => {
+    let params = {};
+
+    if (page) {
+      params["page"] = page - 1;
+    }
+    if (pageSize) {
+      params["size"] = pageSize;
+    }
+
+    return params;
+  };
   
     const retrieveTutorials = () => {
-      UserServices.getPublicAll()
+      const params = getRequestParams(page, pageSize);
+
+      UserServices.getPaginationAll(params)
         .then((response) => {
-          setTutorials(response.data);
+          const { user, totalPages } = response.data;
+
+          setUsers(user);
+          setCount(totalPages);
+  
           console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
         });
+    };
+
+    useEffect(retrieveTutorials, [page, pageSize]);
+
+    const handlePageChange = (event, value) => {
+      setPage(value);
+    };
+  
+    const handlePageSizeChange = (event) => {
+      setPageSize(event.target.value);
+      setPage(1);
     };
 
     const columns = useMemo(
@@ -30,8 +61,24 @@ const SitterListTestPagination = (props) => {
             accessor: "contactname",
           },
           {
+            Header: "Company Name",
+            accessor: "company",
+          },
+          {
             Header: "Email",
             accessor: "email",
+          },
+          {
+            Header: "Address",
+            accessor: "address",
+          },
+          {
+            Header: "Open Time",
+            accessor: "open",
+          },
+          {
+            Header: "Charges",
+            accessor: "chargesperhour",
           },
         ],
         []
@@ -49,8 +96,18 @@ const SitterListTestPagination = (props) => {
       });
 
     return (
-        <div className="list row">
-        <div className="col-md-12 list">
+        <>
+          <div className="mt-3 mb-3">
+            {"Items per Page: "}
+            <select onChange={handlePageSizeChange} value={pageSize}>
+              {pageSizes.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select> 
+          </div>
+              
           <table
             className="table table-striped table-bordered"
             {...getTableProps()}
@@ -80,10 +137,22 @@ const SitterListTestPagination = (props) => {
                 );
               })}
             </tbody>
-          </table>
-        </div>
-  
-      </div>
+          </table> 
+          
+          <Typography>Page: {page}</Typography>
+          <div style={{paddingLeft:"41%"}}>
+              <Pagination 
+                count={count}
+                page={page}
+                siblingCount={1}
+                boundaryCount={1}
+                variant="outlined"
+                color="secondary"
+                onChange={handlePageChange}
+                showFirstButton showLastButton
+              />
+          </div>
+      </>
       );
     };
     
