@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
@@ -104,17 +105,25 @@ const upload = () => {
           {previewImage ? (  
               <img className="avatar rounded-circle img-thumbnail" src={previewImage} alt="" style={{height:"200px", width:"200px"}} /> 
           ) :
-          <img
+          <div>
+        <img
             src={users.logo}
             className="avatar rounded-circle img-thumbnail"
             alt={users.contactname}
             style={{height:"200px", width:"200px"}}
-          /> 
+          />
+          </div>
+          
           }
      <label htmlFor="logo" className="col-sm col-form-label font-weight-bold">Upload a different image...</label>
-        <div className="btn btn-default mt-2">
+        {/* <div className="btn btn-default mt-2">
           <input type="file" id="logo" accept="image/*" onChange={selectFile} />
-        </div>
+        </div> */}
+
+      <Button variant="contained" component="label">
+        Upload
+        <input hidden accept="image/*" multiple type="file" onChange={selectFile} />
+      </Button>
 
         {currentFile && (
       <div className="progress my-3">
@@ -128,18 +137,16 @@ const upload = () => {
         >
           {progress}%
         </div>
-      </div>
+      </div>     
     )}
-
-<div className="col-4">
         <button
-          className="btn btn-success"
+          className="btn btn-success ml-2"
           disabled={!currentFile}
           onClick={upload}
         >
-          Upload
+          Save
         </button>
-      </div>
+      
     </div>
     {message && (
       <div className="alert alert-secondary mt-3" role="alert">

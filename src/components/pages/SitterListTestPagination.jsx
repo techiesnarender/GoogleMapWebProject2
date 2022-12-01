@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useTable } from "react-table";
 import Pagination from '@mui/material/Pagination'; 
 import UserServices from "../../services/UserServices";
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import { CircularProgress, Skeleton, Stack, Typography } from "@mui/material";
 
 
 const SitterListTestPagination = (props) => {
@@ -118,12 +118,16 @@ const SitterListTestPagination = (props) => {
             }}>
               <CircularProgress />
             </Stack>
+            // <Stack spacing={1}>
+            //   <Skeleton variant="rectangular" width="100%" height={60} />
+            //   <Skeleton variant="rectangular" width="100%" height={60} />
+            //   <Skeleton variant="rectangular" width="100%" height={60} />
+            //   <Skeleton variant="rectangular" width="100%" height={60} />
+            // </Stack>
+            
             ) : 
-            <div>
-          <table
-            className="table table-striped table-bordered"
-            {...getTableProps()}
-          >
+            <div className="table-responsive">
+          <table className="table table-striped table-bordered table-hover" {...getTableProps()} >
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
@@ -152,7 +156,10 @@ const SitterListTestPagination = (props) => {
             </tbody>         
           </table>  
           <Typography>Page: {page}</Typography>
-          <div style={{paddingLeft:"41%"}}>
+          <div style={{
+              position: 'absolute', left: '50%',
+              transform: 'translate(-50%, -50%)'
+            }}>
               <Pagination 
                 count={count}
                 page={page}
