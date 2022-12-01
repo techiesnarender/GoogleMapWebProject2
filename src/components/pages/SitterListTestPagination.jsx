@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useTable } from "react-table";
 import Pagination from '@mui/material/Pagination'; 
 import UserServices from "../../services/UserServices";
-import { Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
+
 
 const SitterListTestPagination = (props) => {
     const [users, setUsers] = useState([]);
@@ -10,6 +11,7 @@ const SitterListTestPagination = (props) => {
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
     const [pageSize, setPageSize] = useState(6);
+    const [loading, setLoading] = useState(false);
 
   const pageSizes = [6, 9];
 
@@ -26,20 +28,21 @@ const SitterListTestPagination = (props) => {
     return params;
   };
   
-  
     const retrieveTutorials = () => {
+      setLoading(true);
       const params = getRequestParams(page, pageSize);
 
       UserServices.getPaginationAll(params)
         .then((response) => {
           const { user, totalPages } = response.data;
-
+          setLoading(false);
           setUsers(user);
           setCount(totalPages);
-  
+          
           console.log(response.data);
         })
         .catch((e) => {
+          setLoading(false);
           console.log(e);
         });
     };
@@ -108,7 +111,15 @@ const SitterListTestPagination = (props) => {
               ))}
             </select> 
           </div>
-              
+          {loading ? (
+             <Stack  style={{
+              position: 'absolute', left: '50%', top: '50%',
+              transform: 'translate(-50%, -50%)'
+            }}>
+              <CircularProgress />
+            </Stack>
+            ) : 
+            <div>
           <table
             className="table table-striped table-bordered"
             {...getTableProps()}
@@ -124,6 +135,7 @@ const SitterListTestPagination = (props) => {
                 </tr>
               ))}
             </thead>
+            
             <tbody {...getTableBodyProps()}>
               {rows.map((row, i) => {
                 prepareRow(row);
@@ -136,10 +148,9 @@ const SitterListTestPagination = (props) => {
                     })}
                   </tr>
                 );
-              })}
-            </tbody>
-          </table> 
-          
+              })}             
+            </tbody>         
+          </table>  
           <Typography>Page: {page}</Typography>
           <div style={{paddingLeft:"41%"}}>
               <Pagination 
@@ -153,9 +164,9 @@ const SitterListTestPagination = (props) => {
                 showFirstButton showLastButton
               />
           </div>
+          </div>
+           }      
       </>
       );
     };
-    
-
     export default SitterListTestPagination;
