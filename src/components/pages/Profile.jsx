@@ -139,14 +139,13 @@ const upload = () => {
         </div>
       </div>     
     )}
-        <button
-          className="btn btn-success ml-2"
+        <Button variant="contained"
+          color="secondary"
+          className="ml-2"
           disabled={!currentFile}
-          onClick={upload}
-        >
-          Save
-        </button>
-      
+          onClick={upload}>           
+            Save
+        </Button>
     </div>
     {message && (
       <div className="alert alert-secondary mt-3" role="alert">

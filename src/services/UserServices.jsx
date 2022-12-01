@@ -45,7 +45,8 @@ const upload = (file, email,  onUploadProgress) => {
 };
 
 const getPaginationAll = (params) => {
-  return http.get("/users/paging", { params });
+  return http.get("/users/paging", { params }); 
+ 
 };
 
 const UserServices =  {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
 import Pagination from '@mui/material/Pagination'; 
 import UserServices from "../../services/UserServices";
-import { CircularProgress, Skeleton, Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 
 
 const SitterListTestPagination = (props) => {
@@ -11,13 +11,22 @@ const SitterListTestPagination = (props) => {
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
     const [pageSize, setPageSize] = useState(6);
+    const [searchAddress, setSearchAddress] = useState("");
+    const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
   const pageSizes = [6, 9];
 
-  const getRequestParams = (page, pageSize) => {
-    let params = {};
+  const onChangeSearchAddress = (e) => {
+    const searchAddress = e.target.value;
+    setSearchAddress(searchAddress);
+  };
 
+  const getRequestParams = (searchAddress, page, pageSize) => {
+    let params = {};
+    if (searchAddress) {
+      params["address"] = searchAddress;
+    }
     if (page) {
       params["page"] = page - 1;
     }
@@ -30,12 +39,13 @@ const SitterListTestPagination = (props) => {
   
     const retrieveTutorials = () => {
       setLoading(true);
-      const params = getRequestParams(page, pageSize);
+      const params = getRequestParams(searchAddress,page, pageSize);
 
       UserServices.getPaginationAll(params)
         .then((response) => {
           const { user, totalPages } = response.data;
           setLoading(false);
+          setMessage("")
           setUsers(user);
           setCount(totalPages);
           
@@ -43,11 +53,14 @@ const SitterListTestPagination = (props) => {
         })
         .catch((e) => {
           setLoading(false);
+          setMessage("Something went wrong!");
           console.log(e);
         });
     };
-
+// eslint-disable-next-line
     useEffect(retrieveTutorials, [page, pageSize]);
+
+   // useEffect(retrieveTutorials, [page, pageSize, searchAddress]);
 
     const handlePageChange = (event, value) => {
       setPage(value);
@@ -97,10 +110,33 @@ const SitterListTestPagination = (props) => {
       } = useTable({
         columns,
         data: users,
-      });
+      }, useSortBy);
 
     return (
         <>
+          <div className="row">
+              <div className="col-md-3">
+                <div className="input-group mt-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search by Address"
+                    value={searchAddress}
+                    onChange={onChangeSearchAddress}
+                  />
+                <div className="input-group-append">
+                  <button
+                    className="btn btn-outline-secondary"
+                    type="button"
+                    onClick={retrieveTutorials}
+                  >
+                    Search
+                  </button>
+                </div>
+              </div>
+          </div>
+      </div>
+      
           <div className="mt-3 mb-3">
             {"Items per Page: "}
             <select onChange={handlePageSizeChange} value={pageSize}>
@@ -132,8 +168,11 @@ const SitterListTestPagination = (props) => {
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()}>
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                       {column.render("Header")}
+                      <span>
+                        {column.isSorted ? (column.isSortedDesc ? '🔽':'🔼') : ''}
+                      </span>
                     </th>
                   ))}
                 </tr>
@@ -172,7 +211,17 @@ const SitterListTestPagination = (props) => {
               />
           </div>
           </div>
-           }      
+           }    
+
+           {message && (    
+              <span className="alert alert-danger " role="alert" 
+              style={{
+                position: 'absolute', left: '50%', top: '50%',
+                transform: 'translate(-50%, -50%)'
+              }}>
+                {message}
+              </span>
+          )}     
       </>
       );
     };
